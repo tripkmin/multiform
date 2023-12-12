@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
+import { theme } from './constants';
 
 const GlobalStyles = createGlobalStyle`
     ${reset}
@@ -22,21 +23,7 @@ const GlobalStyles = createGlobalStyle`
     }
     body{
       min-height: 100vh;
-      scrollbar-color: #e5e5e0 #7e7e7c;
-
-      &::-webkit-scrollbar {
-        width: 10px;
-      }
-
-      &::-webkit-scrollbar-track {
-        background: #e5e5e0;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background: #7e7e7c;
-      }
     }
-
     ol, ul{
       list-style: none;
     }
@@ -94,7 +81,16 @@ const GlobalStyles = createGlobalStyle`
     textarea&:focus{
       outline: none;
     }
+
+    #root {
+      min-height: 100vh;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      background-color: ${theme.neutral.magnolia};
+    }
     
+
 `;
 
 export default GlobalStyles;

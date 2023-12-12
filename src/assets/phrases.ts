@@ -1,4 +1,5 @@
 export const phrases = {
+  steps: ['your info', 'select plan', 'add-ons', 'summary'],
   step1: {
     head: 'Personal Info',
     subHead: 'Please provide your name, email address, and phone number.',

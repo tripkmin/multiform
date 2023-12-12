@@ -1,9 +1,8 @@
+import MultiForm from 'components/MultiForm';
+import Section from 'layouts/Section';
+
 function App() {
-  return (
-    <div>
-      <p>Hello world</p>
-    </div>
-  );
+  return <MultiForm />;
 }
 
 export default App;
