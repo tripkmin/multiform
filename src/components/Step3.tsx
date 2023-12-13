@@ -1,9 +1,19 @@
 import { phrases } from 'assets/phrases';
 import styled from 'styled-components';
-import { theme } from 'styles/constants';
+import { theme, timer } from 'styles/constants';
 import { DescriptionText, PriceText, StrongText } from './common/Fonts';
+import { MouseEvent } from 'react';
 
-export default function Step3() {
+interface Step3Props {
+  isYearly: boolean;
+  addOns: {
+    name: string;
+    status: boolean;
+  }[];
+  addOnToggler: (e: MouseEvent<HTMLDivElement>) => void;
+}
+
+export default function Step3({ isYearly, addOns, addOnToggler }: Step3Props) {
   return (
     <>
       <HeadBox>
@@ -12,11 +22,37 @@ export default function Step3() {
       </HeadBox>
       <MainBox>
         <AddOnsBox>
-          <AddOnBox>
+          {addOns.map(addOn => (
+            <AddOnBox
+              onClick={addOnToggler}
+              data-name={addOn.name}
+              $status={addOn.status}>
+              <input type="checkbox" checked={addOn.status}></input>
+              <AddOnDescriptionBox>
+                <StrongText>{addOn.name}</StrongText>
+                <DescriptionText>
+                  {phrases.step3.addOns.find(el => el.name === addOn.name)?.name}
+                </DescriptionText>
+              </AddOnDescriptionBox>
+              {isYearly ? (
+                <PriceText>
+                  +${phrases.step3.addOns.find(el => el.name === addOn.name)?.yearlyPrice}
+                  /yr
+                </PriceText>
+              ) : (
+                <PriceText>
+                  +$
+                  {phrases.step3.addOns.find(el => el.name === addOn.name)?.monthlyPrice}
+                  /mo
+                </PriceText>
+              )}
+            </AddOnBox>
+          ))}
+          {/* <AddOnBox>
             <input type="checkbox"></input>
             <AddOnDescriptionBox>
-              <StrongText>Online Service</StrongText>
-              <DescriptionText>${phrases.step3.onlineService}</DescriptionText>
+              <StrongText>Online service</StrongText>
+              <DescriptionText>{phrases.step3.onlineService}</DescriptionText>
             </AddOnDescriptionBox>
             <PriceText>+$1/mo</PriceText>
           </AddOnBox>
@@ -24,7 +60,7 @@ export default function Step3() {
             <input type="checkbox"></input>
             <AddOnDescriptionBox>
               <StrongText>Larger storage</StrongText>
-              <DescriptionText>${phrases.step3.largerStorage}</DescriptionText>
+              <DescriptionText>{phrases.step3.largerStorage}</DescriptionText>
             </AddOnDescriptionBox>
             <PriceText>+$2/mo</PriceText>
           </AddOnBox>
@@ -32,10 +68,10 @@ export default function Step3() {
             <input type="checkbox"></input>
             <AddOnDescriptionBox>
               <StrongText>Customizable profile</StrongText>
-              <DescriptionText>${phrases.step3.CustomizableProfile}</DescriptionText>
+              <DescriptionText>{phrases.step3.CustomizableProfile}</DescriptionText>
             </AddOnDescriptionBox>
             <PriceText>+$2/mo</PriceText>
-          </AddOnBox>
+          </AddOnBox> */}
         </AddOnsBox>
       </MainBox>
       <ButtonBox>
@@ -72,13 +108,42 @@ const AddOnsBox = styled.div`
   gap: 1rem;
 `;
 
-const AddOnBox = styled.div`
+const AddOnBox = styled.div<{ $status: boolean }>`
   display: flex;
   align-items: center;
   padding: 1rem 1.5rem;
-  border: 1px solid ${theme.neutral.lightGray};
+  border: 1px solid
+    ${props => (props.$status ? theme.primary.purplishBlue : theme.neutral.lightGray)};
+  background-color: ${props => (props.$status ? theme.neutral.alabaster : '')};
   border-radius: 0.5rem;
   gap: 1.5rem;
+  cursor: pointer;
+  transition: background-color ${timer.fast}, border ${timer.fast};
+
+  &:hover {
+    background-color: ${theme.neutral.alabaster};
+  }
+
+  input {
+    position: relative;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid ${theme.neutral.lightGray};
+    border-radius: 5px;
+    transition: background-color ${timer.fast};
+  }
+
+  input:checked {
+    background-color: ${theme.primary.purplishBlue};
+  }
+
+  input::after {
+    position: absolute;
+    top: 0;
+    left: 3px;
+    content: url('icon-checkmark.svg');
+  }
 `;
 
 const AddOnDescriptionBox = styled.div`

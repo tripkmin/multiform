@@ -13,6 +13,7 @@ const CHANGE_EMAIL = 'CHANGE_EMAIL' as const;
 const CHANGE_PHONE = 'CHANGE_PHONE' as const;
 const CHANGE_PLAN = 'CHANGE_PLAN' as const;
 const TOGGLE_IS_YEARLY = 'TOGGLE_IS_YEARLY' as const;
+const TOGGLE_ADD_ON = 'TOGGLE_ADD_ON' as const;
 
 export const changeName = (str: string) => ({
   type: CHANGE_NAME,
@@ -38,12 +39,18 @@ export const toggleIsYearly = () => ({
   type: TOGGLE_IS_YEARLY,
 });
 
+export const toggleAddOn = (name: string) => ({
+  type: TOGGLE_ADD_ON,
+  payload: name,
+});
+
 type FormAction =
   | ReturnType<typeof changeName>
   | ReturnType<typeof changeEmail>
   | ReturnType<typeof changePhone>
   | ReturnType<typeof changePlan>
-  | ReturnType<typeof toggleIsYearly>;
+  | ReturnType<typeof toggleIsYearly>
+  | ReturnType<typeof toggleAddOn>;
 
 const initialState = {
   currentStep: 1,
@@ -52,7 +59,11 @@ const initialState = {
   phone: '',
   plan: '',
   isYearly: true,
-  addOns: [] as string[],
+  addOns: [
+    { name: 'Online service', status: false },
+    { name: 'Larger storage', status: false },
+    { name: 'Customizable profile', status: false },
+  ],
 };
 
 type FormState = typeof initialState;
@@ -69,6 +80,15 @@ function formReducer(state: FormState = initialState, action: FormAction): FormS
       return { ...state, plan: action.payload };
     case TOGGLE_IS_YEARLY:
       return { ...state, isYearly: !state.isYearly };
+    case TOGGLE_ADD_ON:
+      return {
+        ...state,
+        addOns: state.addOns.map(addOn => {
+          return addOn.name === action.payload
+            ? { ...addOn, status: !addOn.status }
+            : addOn;
+        }),
+      };
     default:
       return state;
   }
@@ -97,6 +117,10 @@ export default function MultiForm() {
     dispatch({ type: 'TOGGLE_IS_YEARLY' });
   };
 
+  const addOnToggler = (e: MouseEvent<HTMLDivElement>) => {
+    dispatch({ type: 'TOGGLE_ADD_ON', payload: e.currentTarget.dataset.name as string });
+  };
+
   return (
     <MultiFormBox>
       <SideBar currentStep={state.currentStep} />
@@ -109,13 +133,17 @@ export default function MultiForm() {
           emailHandler={emailHandler}
           phoneHandler={phoneHandler}
         /> */}
-        <Step2
+        {/* <Step2
           currentPlan={state.plan}
           isYearly={state.isYearly}
           planHandler={planHandler}
           isYearlyToggler={isYearlyToggler}
+        /> */}
+        <Step3
+          isYearly={state.isYearly}
+          addOns={state.addOns}
+          addOnToggler={addOnToggler}
         />
-        {/* <Step3 /> */}
         {/* <Step4 /> */}
         {/* <StepComplete /> */}
       </StepBox>
