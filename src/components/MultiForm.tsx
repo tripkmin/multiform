@@ -1,4 +1,4 @@
-import { ChangeEvent, useReducer, useState } from 'react';
+import { ChangeEvent, MouseEvent, useReducer, useState } from 'react';
 import styled from 'styled-components';
 import { size, theme } from 'styles/constants';
 import SideBar from './SideBar';
@@ -11,6 +11,8 @@ import StepComplete from './StepComplete';
 const CHANGE_NAME = 'CHANGE_NAME' as const;
 const CHANGE_EMAIL = 'CHANGE_EMAIL' as const;
 const CHANGE_PHONE = 'CHANGE_PHONE' as const;
+const CHANGE_PLAN = 'CHANGE_PLAN' as const;
+const TOGGLE_IS_YEARLY = 'TOGGLE_IS_YEARLY' as const;
 
 export const changeName = (str: string) => ({
   type: CHANGE_NAME,
@@ -27,10 +29,21 @@ export const changePhone = (str: string) => ({
   payload: str,
 });
 
+export const changePlan = (str: string) => ({
+  type: CHANGE_PLAN,
+  payload: str,
+});
+
+export const toggleIsYearly = () => ({
+  type: TOGGLE_IS_YEARLY,
+});
+
 type FormAction =
   | ReturnType<typeof changeName>
   | ReturnType<typeof changeEmail>
-  | ReturnType<typeof changePhone>;
+  | ReturnType<typeof changePhone>
+  | ReturnType<typeof changePlan>
+  | ReturnType<typeof toggleIsYearly>;
 
 const initialState = {
   currentStep: 1,
@@ -38,7 +51,7 @@ const initialState = {
   email: '',
   phone: '',
   plan: '',
-  planDuration: '',
+  isYearly: true,
   addOns: [] as string[],
 };
 
@@ -52,6 +65,10 @@ function formReducer(state: FormState = initialState, action: FormAction): FormS
       return { ...state, email: action.payload };
     case CHANGE_PHONE:
       return { ...state, phone: action.payload };
+    case CHANGE_PLAN:
+      return { ...state, plan: action.payload };
+    case TOGGLE_IS_YEARLY:
+      return { ...state, isYearly: !state.isYearly };
     default:
       return state;
   }
@@ -72,19 +89,32 @@ export default function MultiForm() {
     dispatch({ type: 'CHANGE_PHONE', payload: e.target.value });
   };
 
+  const planHandler = (e: MouseEvent<HTMLDivElement>) => {
+    dispatch({ type: 'CHANGE_PLAN', payload: e.currentTarget.dataset.plan as string });
+  };
+
+  const isYearlyToggler = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: 'TOGGLE_IS_YEARLY' });
+  };
+
   return (
     <MultiFormBox>
       <SideBar currentStep={state.currentStep} />
       <StepBox>
-        <Step1
+        {/* <Step1
           name={state.name}
           email={state.email}
           phone={state.phone}
           nameHandler={nameHandler}
           emailHandler={emailHandler}
           phoneHandler={phoneHandler}
+        /> */}
+        <Step2
+          currentPlan={state.plan}
+          isYearly={state.isYearly}
+          planHandler={planHandler}
+          isYearlyToggler={isYearlyToggler}
         />
-        {/* <Step2 /> */}
         {/* <Step3 /> */}
         {/* <Step4 /> */}
         {/* <StepComplete /> */}
