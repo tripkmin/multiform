@@ -1,8 +1,25 @@
 import { phrases } from 'assets/phrases';
+import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 import { theme } from 'styles/constants';
 
-export default function Step1() {
+interface Step1Props {
+  name: string;
+  email: string;
+  phone: string;
+  nameHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+  emailHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+  phoneHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+export default function Step1({
+  name,
+  email,
+  phone,
+  nameHandler,
+  emailHandler,
+  phoneHandler,
+}: Step1Props) {
   return (
     <>
       <HeadBox>
@@ -10,12 +27,30 @@ export default function Step1() {
         <SubHead>{phrases.step1.subHead}</SubHead>
       </HeadBox>
       <Form>
-        <label>Name</label>
-        <input type="text" placeholder={phrases.step1.namePlaceHolder}></input>
-        <label>Email Address</label>
-        <input type="text" placeholder={phrases.step1.emailPlaceHolder}></input>
-        <label>Phone Number</label>
-        <input type="text" placeholder={phrases.step1.phonePlaceHolder}></input>
+        <LabelBox>
+          <Label>Name</Label>
+          <Warning>This field is required</Warning>
+        </LabelBox>
+        <input
+          onChange={nameHandler}
+          value={name}
+          type="text"
+          placeholder={phrases.step1.namePlaceHolder}
+        ></input>
+        <Label>Email Address</Label>
+        <input
+          type="text"
+          value={email}
+          onChange={emailHandler}
+          placeholder={phrases.step1.emailPlaceHolder}
+        ></input>
+        <Label>Phone Number</Label>
+        <input
+          type="text"
+          value={phone}
+          onChange={phoneHandler}
+          placeholder={phrases.step1.phonePlaceHolder}
+        ></input>
       </Form>
       <ButtonBox>
         <button>Next Step</button>
@@ -49,7 +84,7 @@ const Form = styled.form`
   gap: 1rem;
 
   label {
-    font-size: 0.9rem;
+    font-size: 14px;
     font-weight: 700;
   }
 
@@ -66,6 +101,22 @@ const Form = styled.form`
       border: 1px solid ${theme.primary.strawberryRed};
     }
   }
+`;
+
+const LabelBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Label = styled.label`
+  font-size: 14px;
+  font-weight: 700;
+`;
+
+const Warning = styled.p`
+  font-size: 14px;
+  color: ${theme.primary.strawberryRed};
 `;
 
 const ButtonBox = styled.div`

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useReducer, useState } from 'react';
 import styled from 'styled-components';
 import { size, theme } from 'styles/constants';
 import SideBar from './SideBar';
@@ -8,39 +8,86 @@ import Step3 from './Step3';
 import Step4 from './Step4';
 import StepComplete from './StepComplete';
 
-export default function MultiForm() {
-  /* 
-  관리해야 하는 state들
-    { 
-      currentStep: number,
-      name: string(3자 이상으로),
-      email: string(정규식으로 체크),
-      phone: string(정규식으로 체크),
-      plan: "arcade" || "advanced" || "pro"
-      planDuration: "monthly" || "Yearly",
-      addOns: ("online" || "storage" || "profile")[]
-    }
-  */
+const CHANGE_NAME = 'CHANGE_NAME' as const;
+const CHANGE_EMAIL = 'CHANGE_EMAIL' as const;
+const CHANGE_PHONE = 'CHANGE_PHONE' as const;
 
-  const [state, setState] = useState({
-    currentStep: 1,
-    name: '',
-    email: '',
-    phone: '',
-    plan: '',
-    planDuration: '',
-    addOns: [],
-  });
+export const changeName = (str: string) => ({
+  type: CHANGE_NAME,
+  payload: str,
+});
+
+export const changeEmail = (str: string) => ({
+  type: CHANGE_EMAIL,
+  payload: str,
+});
+
+export const changePhone = (str: string) => ({
+  type: CHANGE_PHONE,
+  payload: str,
+});
+
+type FormAction =
+  | ReturnType<typeof changeName>
+  | ReturnType<typeof changeEmail>
+  | ReturnType<typeof changePhone>;
+
+const initialState = {
+  currentStep: 1,
+  name: '',
+  email: '',
+  phone: '',
+  plan: '',
+  planDuration: '',
+  addOns: [] as string[],
+};
+
+type FormState = typeof initialState;
+
+function formReducer(state: FormState = initialState, action: FormAction): FormState {
+  switch (action.type) {
+    case CHANGE_NAME:
+      return { ...state, name: action.payload };
+    case CHANGE_EMAIL:
+      return { ...state, email: action.payload };
+    case CHANGE_PHONE:
+      return { ...state, phone: action.payload };
+    default:
+      return state;
+  }
+}
+
+export default function MultiForm() {
+  const [state, dispatch] = useReducer(formReducer, initialState);
+
+  const nameHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: 'CHANGE_NAME', payload: e.target.value });
+  };
+
+  const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: 'CHANGE_EMAIL', payload: e.target.value });
+  };
+
+  const phoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: 'CHANGE_PHONE', payload: e.target.value });
+  };
 
   return (
     <MultiFormBox>
       <SideBar currentStep={state.currentStep} />
       <StepBox>
-        {/* <Step1 /> */}
+        <Step1
+          name={state.name}
+          email={state.email}
+          phone={state.phone}
+          nameHandler={nameHandler}
+          emailHandler={emailHandler}
+          phoneHandler={phoneHandler}
+        />
         {/* <Step2 /> */}
         {/* <Step3 /> */}
         {/* <Step4 /> */}
-        <StepComplete />
+        {/* <StepComplete /> */}
       </StepBox>
     </MultiFormBox>
   );
