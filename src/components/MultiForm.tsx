@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { theme } from 'styles/constants';
+import { size, theme } from 'styles/constants';
 import SideBar from './SideBar';
 import Step1 from './Step1';
 import Step2 from './Step2';
@@ -34,7 +34,7 @@ export default function MultiForm() {
 
   return (
     <MultiFormBox>
-      <SideBar />
+      <SideBar currentStep={state.currentStep} />
       <StepBox>
         {/* <Step1 /> */}
         {/* <Step2 /> */}
@@ -53,6 +53,10 @@ const MultiFormBox = styled.div`
   border-radius: 1rem;
   background-color: ${theme.neutral.white};
   gap: 2rem;
+
+  @media screen and (max-width: ${size.desktop}) {
+    width: 100%;
+  }
 `;
 
 const StepBox = styled.div`
