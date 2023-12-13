@@ -43,22 +43,6 @@ const SubHead = styled.h2`
   color: ${theme.neutral.coolGray};
 `;
 
-const MainBox = styled.div``;
-
-const PlansBox = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
-
-const PlanBox = styled.div`
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid ${theme.primary.marineBlue};
-  border-radius: 0.8rem;
-  gap: 1rem;
-`;
-
 const Form = styled.form`
   display: flex;
   flex-direction: column;
