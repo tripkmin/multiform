@@ -5,6 +5,7 @@ export const theme = {
     pastelBlue: 'hsl(228, 100%, 84%)',
     lightBlue: 'hsl(206, 94%, 87%)',
     strawberryRed: 'hsl(354, 84%, 57%)',
+    paleMarinBlue: 'hsl(214, 44%, 45%)',
   },
   neutral: {
     coolGray: 'hsl(231, 11%, 63%)',

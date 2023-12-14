@@ -7,6 +7,7 @@ import Step2 from './Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
 import StepComplete from './StepComplete';
+import { emailRegex, nameRegex, phoneRegex } from 'utils/regex';
 
 const CHANGE_NAME = 'CHANGE_NAME' as const;
 const CHANGE_EMAIL = 'CHANGE_EMAIL' as const;
@@ -57,6 +58,9 @@ const initialState = {
   name: '',
   email: '',
   phone: '',
+  isNameVaild: { status: false, message: '' },
+  isEmailValid: false,
+  isPhoneValid: false,
   plan: '',
   isYearly: true,
   addOns: [
@@ -68,14 +72,34 @@ const initialState = {
 
 type FormState = typeof initialState;
 
+function nameChecker(name: string) {
+  if (name.trim().length === 0) {
+    return { status: false, message: 'Blank input is not allowed.' };
+  } else if (name.length > 30) {
+    return { status: false, message: 'Cannot exceed 30 characters.' };
+  } else if (!nameRegex.test(name)) {
+    return { status: false, message: 'Only English letters are allowed.' };
+  } else {
+    return { status: true, message: '' };
+  }
+}
+
 function formReducer(state: FormState = initialState, action: FormAction): FormState {
   switch (action.type) {
     case CHANGE_NAME:
-      return { ...state, name: action.payload };
+      return { ...state, name: action.payload, isNameVaild: nameChecker(action.payload) };
     case CHANGE_EMAIL:
-      return { ...state, email: action.payload };
+      return {
+        ...state,
+        email: action.payload,
+        isEmailValid: emailRegex.test(action.payload),
+      };
     case CHANGE_PHONE:
-      return { ...state, phone: action.payload };
+      return {
+        ...state,
+        phone: action.payload,
+        isPhoneValid: phoneRegex.test(action.payload.replaceAll(' ', '')),
+      };
     case CHANGE_PLAN:
       return { ...state, plan: action.payload };
     case TOGGLE_IS_YEARLY:
@@ -124,26 +148,30 @@ export default function MultiForm() {
   return (
     <MultiFormBox>
       <SideBar currentStep={state.currentStep} />
+
       <StepBox>
-        {/* <Step1
+        <Step1
           name={state.name}
           email={state.email}
           phone={state.phone}
+          isNameVaild={state.isNameVaild}
+          isEmailValid={state.isEmailValid}
+          isPhoneValid={state.isPhoneValid}
           nameHandler={nameHandler}
           emailHandler={emailHandler}
           phoneHandler={phoneHandler}
-        /> */}
-        {/* <Step2
-          currentPlan={state.plan}
-          isYearly={state.isYearly}
-          planHandler={planHandler}
-          isYearlyToggler={isYearlyToggler}
-        /> */}
-        <Step3
-          isYearly={state.isYearly}
-          addOns={state.addOns}
-          addOnToggler={addOnToggler}
         />
+        {/* <Step2
+            currentPlan={state.plan}
+            isYearly={state.isYearly}
+            planHandler={planHandler}
+            isYearlyToggler={isYearlyToggler}
+          /> */}
+        {/* <Step3
+            isYearly={state.isYearly}
+            addOns={state.addOns}
+            addOnToggler={addOnToggler}
+          /> */}
         {/* <Step4 /> */}
         {/* <StepComplete /> */}
       </StepBox>

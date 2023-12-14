@@ -1,12 +1,16 @@
 import { phrases } from 'assets/phrases';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useRef } from 'react';
 import styled from 'styled-components';
 import { theme } from 'styles/constants';
+import { SolidButton } from './common/Button';
 
 interface Step1Props {
   name: string;
   email: string;
   phone: string;
+  isNameVaild: { status: boolean; message: string };
+  isEmailValid: boolean;
+  isPhoneValid: boolean;
   nameHandler: (e: ChangeEvent<HTMLInputElement>) => void;
   emailHandler: (e: ChangeEvent<HTMLInputElement>) => void;
   phoneHandler: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -16,6 +20,9 @@ export default function Step1({
   name,
   email,
   phone,
+  isNameVaild,
+  isEmailValid,
+  isPhoneValid,
   nameHandler,
   emailHandler,
   phoneHandler,
@@ -29,7 +36,7 @@ export default function Step1({
       <Form>
         <LabelBox>
           <Label>Name</Label>
-          <Warning>This field is required</Warning>
+          {isNameVaild.status ? null : <Warning>{isNameVaild.message}</Warning>}
         </LabelBox>
         <input
           onChange={nameHandler}
@@ -37,14 +44,22 @@ export default function Step1({
           type="text"
           placeholder={phrases.step1.namePlaceHolder}
         ></input>
-        <Label>Email Address</Label>
+        <LabelBox>
+          <Label>Email Address</Label>
+          {isEmailValid ? null : <Warning>Please enter a valid email format</Warning>}
+        </LabelBox>
         <input
           type="text"
           value={email}
           onChange={emailHandler}
           placeholder={phrases.step1.emailPlaceHolder}
         ></input>
-        <Label>Phone Number</Label>
+        <LabelBox>
+          <Label>Phone Number</Label>
+          {isPhoneValid ? null : (
+            <Warning>Please enter a valid phone number format.</Warning>
+          )}
+        </LabelBox>
         <input
           type="text"
           value={phone}
@@ -53,8 +68,10 @@ export default function Step1({
         ></input>
       </Form>
       <ButtonBox>
-        <button>Next Step</button>
-        <button>Go Back</button>
+        <SolidButton disabled={!isNameVaild || !isEmailValid || !isPhoneValid}>
+          Next Step
+        </SolidButton>
+        {/* <button>Go Back</button> */}
       </ButtonBox>
     </>
   );
@@ -117,6 +134,7 @@ const Label = styled.label`
 const Warning = styled.p`
   font-size: 14px;
   color: ${theme.primary.strawberryRed};
+  line-height: 100%;
 `;
 
 const ButtonBox = styled.div`
