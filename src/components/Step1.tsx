@@ -11,6 +11,7 @@ interface Step1Props {
   isNameVaild: { status: boolean; message: string };
   isEmailValid: boolean;
   isPhoneValid: boolean;
+  stepHandler: (num: number) => void;
   nameHandler: (e: ChangeEvent<HTMLInputElement>) => void;
   emailHandler: (e: ChangeEvent<HTMLInputElement>) => void;
   phoneHandler: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -23,6 +24,7 @@ export default function Step1({
   isNameVaild,
   isEmailValid,
   isPhoneValid,
+  stepHandler,
   nameHandler,
   emailHandler,
   phoneHandler,
@@ -68,7 +70,12 @@ export default function Step1({
         ></input>
       </Form>
       <ButtonBox>
-        <SolidButton disabled={!isNameVaild || !isEmailValid || !isPhoneValid}>
+        <SolidButton
+          onClick={() => {
+            stepHandler(1);
+          }}
+          disabled={!isNameVaild || !isEmailValid || !isPhoneValid}
+        >
           Next Step
         </SolidButton>
         {/* <button>Go Back</button> */}

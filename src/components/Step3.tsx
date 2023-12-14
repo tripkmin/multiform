@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
 import { DescriptionText, PriceText, StrongText } from './common/Fonts';
 import { MouseEvent } from 'react';
+import { PlainButton, SolidButton } from './common/Button';
 
 interface Step3Props {
   isYearly: boolean;
@@ -10,10 +11,16 @@ interface Step3Props {
     name: string;
     status: boolean;
   }[];
+  stepHandler: (num: number) => void;
   addOnToggler: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
-export default function Step3({ isYearly, addOns, addOnToggler }: Step3Props) {
+export default function Step3({
+  isYearly,
+  addOns,
+  stepHandler,
+  addOnToggler,
+}: Step3Props) {
   return (
     <>
       <HeadBox>
@@ -26,7 +33,8 @@ export default function Step3({ isYearly, addOns, addOnToggler }: Step3Props) {
             <AddOnBox
               onClick={addOnToggler}
               data-name={addOn.name}
-              $status={addOn.status}>
+              $status={addOn.status}
+            >
               <input type="checkbox" checked={addOn.status}></input>
               <AddOnDescriptionBox>
                 <StrongText>{addOn.name}</StrongText>
@@ -48,35 +56,23 @@ export default function Step3({ isYearly, addOns, addOnToggler }: Step3Props) {
               )}
             </AddOnBox>
           ))}
-          {/* <AddOnBox>
-            <input type="checkbox"></input>
-            <AddOnDescriptionBox>
-              <StrongText>Online service</StrongText>
-              <DescriptionText>{phrases.step3.onlineService}</DescriptionText>
-            </AddOnDescriptionBox>
-            <PriceText>+$1/mo</PriceText>
-          </AddOnBox>
-          <AddOnBox>
-            <input type="checkbox"></input>
-            <AddOnDescriptionBox>
-              <StrongText>Larger storage</StrongText>
-              <DescriptionText>{phrases.step3.largerStorage}</DescriptionText>
-            </AddOnDescriptionBox>
-            <PriceText>+$2/mo</PriceText>
-          </AddOnBox>
-          <AddOnBox>
-            <input type="checkbox"></input>
-            <AddOnDescriptionBox>
-              <StrongText>Customizable profile</StrongText>
-              <DescriptionText>{phrases.step3.CustomizableProfile}</DescriptionText>
-            </AddOnDescriptionBox>
-            <PriceText>+$2/mo</PriceText>
-          </AddOnBox> */}
         </AddOnsBox>
       </MainBox>
       <ButtonBox>
-        <button>Next Step</button>
-        <button>Go Back</button>
+        <SolidButton
+          onClick={() => {
+            stepHandler(1);
+          }}
+        >
+          Next Step
+        </SolidButton>
+        <PlainButton
+          onClick={() => {
+            stepHandler(-1);
+          }}
+        >
+          Go Back
+        </PlainButton>
       </ButtonBox>
     </>
   );
@@ -119,6 +115,7 @@ const AddOnBox = styled.div<{ $status: boolean }>`
   gap: 1.5rem;
   cursor: pointer;
   transition: background-color ${timer.fast}, border ${timer.fast};
+  user-select: none;
 
   &:hover {
     background-color: ${theme.neutral.alabaster};
@@ -132,6 +129,7 @@ const AddOnBox = styled.div<{ $status: boolean }>`
     border: 1px solid ${theme.neutral.lightGray};
     border-radius: 5px;
     transition: background-color ${timer.fast};
+    flex-shrink: 0;
   }
 
   input:checked {
@@ -140,7 +138,7 @@ const AddOnBox = styled.div<{ $status: boolean }>`
 
   input::after {
     position: absolute;
-    top: 0;
+    top: -1px;
     left: 3px;
     content: url('icon-checkmark.svg');
   }

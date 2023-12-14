@@ -2,8 +2,24 @@ import { phrases } from 'assets/phrases';
 import styled from 'styled-components';
 import { theme } from 'styles/constants';
 import { DescriptionText, PriceText, StrongText } from './common/Fonts';
+import { PlainButton, SolidButton } from './common/Button';
+import { PLANS } from 'assets/data';
+import { convert } from 'utils/convertFinal';
 
-export default function Step4() {
+interface Step4Props {
+  plan: string;
+  isYearly: boolean;
+  addOns: {
+    name: string;
+    status: boolean;
+  }[];
+  stepHandler: (num: number) => void;
+}
+
+export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Props) {
+  // 변수명 수정할 것
+  const final = convert(plan, isYearly, addOns);
+
   return (
     <>
       <HeadBox>
@@ -14,30 +30,54 @@ export default function Step4() {
         <ChargeDescriptionBox>
           <ChargeBox>
             <div>
-              <StrongText>Arcade (Monthly)</StrongText>
-              <DescriptionText>Change</DescriptionText>
+              <StrongText>
+                {final.plan} ({final.planDuration})
+              </StrongText>
+              <DescriptionText
+                onClick={() => {
+                  stepHandler(-2);
+                }}
+              >
+                Change
+              </DescriptionText>
             </div>
-            <StrongText>$9/mo</StrongText>
+            <StrongText>
+              ${final.planPrice}/{isYearly ? 'yr' : 'mo'}
+            </StrongText>
           </ChargeBox>
-          <ChargeBox>
-            <DescriptionText>Online service</DescriptionText>
-            <StrongText>+$1/mo</StrongText>
-          </ChargeBox>
-          <ChargeBox>
-            <DescriptionText>Larger storage</DescriptionText>
-            <StrongText>+$2/mo</StrongText>
-          </ChargeBox>
+          {final.addOns.map(el => (
+            <ChargeBox>
+              <DescriptionText>{el.name}</DescriptionText>
+              <StrongText>
+                +${el.price}/{isYearly ? 'yr' : 'mo'}
+              </StrongText>
+            </ChargeBox>
+          ))}
         </ChargeDescriptionBox>
         <ChargeTotalBox>
           <ChargeBox>
             <DescriptionText>Total (per month)</DescriptionText>
-            <StrongText>+$12/mo</StrongText>
+            <StrongText>
+              +${final.totalPrice}/{isYearly ? 'yr' : 'mo'}
+            </StrongText>
           </ChargeBox>
         </ChargeTotalBox>
       </MainBox>
       <ButtonBox>
-        <button>Next Step</button>
-        <button>Go Back</button>
+        <SolidButton
+          onClick={() => {
+            stepHandler(1);
+          }}
+        >
+          Next Step
+        </SolidButton>
+        <PlainButton
+          onClick={() => {
+            stepHandler(-1);
+          }}
+        >
+          Go Back
+        </PlainButton>
       </ButtonBox>
     </>
   );

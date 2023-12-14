@@ -3,10 +3,13 @@ import { phrases } from 'assets/phrases';
 import { ChangeEvent, MouseEvent } from 'react';
 import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
+import { PlainButton, SolidButton } from './common/Button';
+import { PLANS } from 'assets/data';
 
 interface Step2Props {
   currentPlan: string;
   isYearly: boolean;
+  stepHandler: (num: number) => void;
   planHandler: (e: MouseEvent<HTMLDivElement>) => void;
   isYearlyToggler: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -14,30 +17,10 @@ interface Step2Props {
 export default function Step2({
   currentPlan,
   isYearly,
+  stepHandler,
   planHandler,
   isYearlyToggler,
 }: Step2Props) {
-  const plans = [
-    {
-      name: 'Arcade',
-      monthly: 9,
-      yearly: 90,
-      icon: <IconArcade />,
-    },
-    {
-      name: 'Advanced',
-      monthly: 12,
-      yearly: 120,
-      icon: <IconAdvanced />,
-    },
-    {
-      name: 'Pro',
-      monthly: 15,
-      yearly: 150,
-      icon: <IconPro />,
-    },
-  ];
-
   return (
     <>
       <HeadBox>
@@ -46,16 +29,20 @@ export default function Step2({
       </HeadBox>
       <MainBox>
         <PlansBox>
-          {plans.map(plan => (
+          {PLANS.map(plan => (
             <PlanBox
               $currentPlan={currentPlan}
               data-plan={plan.name}
               onClick={planHandler}
-              key={plan.name}>
+              key={plan.name}
+            >
               {plan.icon}
               <div>
                 <PlanName>{plan.name}</PlanName>
-                <PlanDuration>${plan.monthly}/mo</PlanDuration>
+                <PlanDuration>
+                  ${isYearly ? `${plan.yearly}/yr` : `${plan.monthly}/mo`}
+                </PlanDuration>
+                {isYearly && <PlanDescription>2 months free</PlanDescription>}
               </div>
             </PlanBox>
           ))}
@@ -67,8 +54,20 @@ export default function Step2({
         </DurationToggleBox>
       </MainBox>
       <ButtonBox>
-        <button>Next Step</button>
-        <button>Go Back</button>
+        <SolidButton
+          onClick={() => {
+            stepHandler(1);
+          }}
+        >
+          Next Step
+        </SolidButton>
+        <PlainButton
+          onClick={() => {
+            stepHandler(-1);
+          }}
+        >
+          Go Back
+        </PlainButton>
       </ButtonBox>
     </>
   );
@@ -118,6 +117,10 @@ const PlanBox = styled.div<{ $currentPlan: string; 'data-plan': string }>`
     props.$currentPlan === props['data-plan'] ? theme.neutral.alabaster : 'transparent'};
   cursor: pointer;
   transition: border ${timer.default}, background-color ${timer.default};
+
+  &:hover {
+    background-color: ${theme.neutral.alabaster};
+  }
 `;
 
 const PlanName = styled.p`
@@ -126,10 +129,17 @@ const PlanName = styled.p`
   color: ${theme.primary.marineBlue};
   letter-spacing: -0.25px;
 `;
+
 const PlanDuration = styled.p`
   font-size: 14px;
   font-weight: 500;
   color: ${theme.neutral.coolGray};
+`;
+
+const PlanDescription = styled.p`
+  font-size: 14px;
+  font-weight: 500;
+  color: ${theme.primary.marineBlue};
 `;
 
 const DurationToggleBox = styled.div`

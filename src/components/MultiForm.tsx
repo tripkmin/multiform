@@ -9,12 +9,18 @@ import Step4 from './Step4';
 import StepComplete from './StepComplete';
 import { emailRegex, nameRegex, phoneRegex } from 'utils/regex';
 
+const CHANGE_STEP = 'CHANGE_STEP' as const;
 const CHANGE_NAME = 'CHANGE_NAME' as const;
 const CHANGE_EMAIL = 'CHANGE_EMAIL' as const;
 const CHANGE_PHONE = 'CHANGE_PHONE' as const;
 const CHANGE_PLAN = 'CHANGE_PLAN' as const;
 const TOGGLE_IS_YEARLY = 'TOGGLE_IS_YEARLY' as const;
 const TOGGLE_ADD_ON = 'TOGGLE_ADD_ON' as const;
+
+export const changeStep = (num: number) => ({
+  type: CHANGE_STEP,
+  payload: num,
+});
 
 export const changeName = (str: string) => ({
   type: CHANGE_NAME,
@@ -46,6 +52,7 @@ export const toggleAddOn = (name: string) => ({
 });
 
 type FormAction =
+  | ReturnType<typeof changeStep>
   | ReturnType<typeof changeName>
   | ReturnType<typeof changeEmail>
   | ReturnType<typeof changePhone>
@@ -86,6 +93,8 @@ function nameChecker(name: string) {
 
 function formReducer(state: FormState = initialState, action: FormAction): FormState {
   switch (action.type) {
+    case CHANGE_STEP:
+      return { ...state, currentStep: state.currentStep + action.payload };
     case CHANGE_NAME:
       return { ...state, name: action.payload, isNameVaild: nameChecker(action.payload) };
     case CHANGE_EMAIL:
@@ -121,6 +130,10 @@ function formReducer(state: FormState = initialState, action: FormAction): FormS
 export default function MultiForm() {
   const [state, dispatch] = useReducer(formReducer, initialState);
 
+  const stepHandler = (num: number) => {
+    dispatch({ type: 'CHANGE_STEP', payload: num });
+  };
+
   const nameHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'CHANGE_NAME', payload: e.target.value });
   };
@@ -150,30 +163,46 @@ export default function MultiForm() {
       <SideBar currentStep={state.currentStep} />
 
       <StepBox>
-        <Step1
-          name={state.name}
-          email={state.email}
-          phone={state.phone}
-          isNameVaild={state.isNameVaild}
-          isEmailValid={state.isEmailValid}
-          isPhoneValid={state.isPhoneValid}
-          nameHandler={nameHandler}
-          emailHandler={emailHandler}
-          phoneHandler={phoneHandler}
-        />
-        {/* <Step2
+        {state.currentStep === 1 && (
+          <Step1
+            name={state.name}
+            email={state.email}
+            phone={state.phone}
+            isNameVaild={state.isNameVaild}
+            isEmailValid={state.isEmailValid}
+            isPhoneValid={state.isPhoneValid}
+            stepHandler={stepHandler}
+            nameHandler={nameHandler}
+            emailHandler={emailHandler}
+            phoneHandler={phoneHandler}
+          />
+        )}
+        {state.currentStep === 2 && (
+          <Step2
+            stepHandler={stepHandler}
             currentPlan={state.plan}
             isYearly={state.isYearly}
             planHandler={planHandler}
             isYearlyToggler={isYearlyToggler}
-          /> */}
-        {/* <Step3
+          />
+        )}
+        {state.currentStep === 3 && (
+          <Step3
+            stepHandler={stepHandler}
             isYearly={state.isYearly}
             addOns={state.addOns}
             addOnToggler={addOnToggler}
-          /> */}
-        {/* <Step4 /> */}
-        {/* <StepComplete /> */}
+          />
+        )}
+        {state.currentStep === 4 && (
+          <Step4
+            plan={state.plan}
+            isYearly={state.isYearly}
+            addOns={state.addOns}
+            stepHandler={stepHandler}
+          />
+        )}
+        {state.currentStep === 5 && <StepComplete />}
       </StepBox>
     </MultiFormBox>
   );
