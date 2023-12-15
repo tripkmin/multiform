@@ -239,13 +239,6 @@ const StepBox = styled.div`
   gap: 2.5rem;
   padding: 3rem 5rem;
   flex-grow: 1;
-
-  button {
-    background-color: ${theme.primary.marineBlue};
-    color: ${theme.neutral.white};
-    padding: 1rem;
-    border-radius: 0.5rem;
-  }
 `;
 
 const StepFinishBox = styled(StepBox)`

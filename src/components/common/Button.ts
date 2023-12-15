@@ -9,14 +9,19 @@ export const SolidButton = styled.button`
   font-weight: 500;
   transition: background-color ${timer.default}, color ${timer.default};
 
-  &:disabled {
+  &:hover,
+  &:focus {
     background-color: ${theme.primary.paleMarinBlue};
+  }
+
+  &:disabled {
+    background-color: ${theme.neutral.darkGray};
     cursor: not-allowed;
   }
 `;
 
 export const PlainButton = styled.button`
-  color: ${theme.primary.marineBlue};
+  color: ${theme.neutral.coolGray};
   padding: 1rem;
   border-radius: 0.5rem;
   font-weight: 500;

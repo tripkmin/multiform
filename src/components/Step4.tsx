@@ -1,7 +1,7 @@
 import { phrases } from 'assets/phrases';
 import styled from 'styled-components';
 import { theme } from 'styles/constants';
-import { DescriptionText, PriceText, StrongText } from './common/Fonts';
+import { DescriptionText, LinkText, PriceText, StrongText } from './common/Fonts';
 import { PlainButton, SolidButton } from './common/Button';
 import { convert } from 'utils/convertFinal';
 
@@ -32,12 +32,18 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
               <StrongText>
                 {final.plan} ({final.planDuration})
               </StrongText>
-              <DescriptionText
+              <LinkText
+                tabIndex={1}
                 onClick={() => {
                   stepHandler(-2);
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    stepHandler(-2);
+                  }
                 }}>
                 Change
-              </DescriptionText>
+              </LinkText>
             </div>
             <StrongText>
               ${final.planPrice}/{isYearly ? 'yr' : 'mo'}
@@ -55,9 +61,9 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
         <ChargeTotalBox>
           <ChargeBox>
             <DescriptionText>Total (per month)</DescriptionText>
-            <StrongText>
+            <PriceText>
               ${final.totalPrice}/{isYearly ? 'yr' : 'mo'}
-            </StrongText>
+            </PriceText>
           </ChargeBox>
         </ChargeTotalBox>
       </MainBox>
@@ -118,8 +124,6 @@ const ChargeDescriptionBox = styled.div`
     border-bottom: 1px solid ${theme.neutral.lightGray};
   }
 `;
-
-const ChargeOptionBox = styled.div``;
 
 const ChargeTotalBox = styled.div`
   padding: 1rem;
