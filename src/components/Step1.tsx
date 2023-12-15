@@ -104,7 +104,7 @@ export default function Step1({
           onClick={() => {
             stepHandler(1);
           }}
-          disabled={!isNameVaild || !isEmailValid || !isPhoneValid}
+          disabled={!isNameVaild.status || !isEmailValid || !isPhoneValid}
         >
           Next Step
         </SolidButton>
