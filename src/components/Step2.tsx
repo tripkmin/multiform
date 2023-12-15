@@ -83,6 +83,7 @@ export default function Step2({
       </MainBox>
       <ButtonBox>
         <SolidButton
+          disabled={currentPlan === ''}
           onClick={() => {
             stepHandler(1);
           }}
