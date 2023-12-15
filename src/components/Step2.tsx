@@ -4,7 +4,14 @@ import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
 import { PlainButton, SolidButton } from './common/Button';
 import { PLANS } from 'assets/data';
-import { SmallBlueText, SmallText, MediumText, MediumBlueText } from './common/Fonts';
+import {
+  SmallBlueText,
+  SmallText,
+  MediumText,
+  MediumBlueText,
+  HeadText,
+  Text,
+} from './common/Fonts';
 
 interface Step2Props {
   currentPlan: string;
@@ -24,8 +31,8 @@ export default function Step2({
   return (
     <>
       <HeadBox>
-        <Head>{phrases.step2.head}</Head>
-        <SubHead>{phrases.step2.subHead}</SubHead>
+        <HeadText>{phrases.step2.head}</HeadText>
+        <Text>{phrases.step2.subHead}</Text>
       </HeadBox>
       <MainBox>
         <PlansBox>
@@ -43,7 +50,7 @@ export default function Step2({
               }}
             >
               {plan.icon}
-              <div>
+              <PlanMainBox>
                 <PlanMain $isYearly={isYearly}>
                   <MediumBlueText>{plan.name}</MediumBlueText>
                   <SmallText>
@@ -51,7 +58,7 @@ export default function Step2({
                   </SmallText>
                 </PlanMain>
                 <PlanDescription $isYearly={isYearly}>2 months free</PlanDescription>
-              </div>
+              </PlanMainBox>
             </PlanBox>
           ))}
         </PlansBox>
@@ -108,18 +115,6 @@ const HeadBox = styled.div`
   gap: 0.8rem;
 `;
 
-const Head = styled.h1`
-  font-size: 2rem;
-  font-weight: 700;
-  color: ${theme.primary.marineBlue};
-`;
-
-const SubHead = styled.h2`
-  font-size: 1rem;
-  font-weight: 500;
-  color: ${theme.neutral.coolGray};
-`;
-
 const MainBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -135,7 +130,7 @@ const PlansBox = styled.div`
 const PlanBox = styled.div<{ $currentPlan: string; 'data-plan': string }>`
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 3rem;
   padding: 1rem;
   border: ${props =>
     props.$currentPlan === props['data-plan']
@@ -145,7 +140,7 @@ const PlanBox = styled.div<{ $currentPlan: string; 'data-plan': string }>`
   background-color: ${props =>
     props.$currentPlan === props['data-plan'] ? theme.neutral.alabaster : 'transparent'};
   cursor: pointer;
-  transition: border ${timer.default}, background-color ${timer.default};
+  transition: border ${timer.fast}, background-color ${timer.fast};
 
   &:hover {
     background-color: ${theme.neutral.alabaster};
@@ -156,9 +151,18 @@ const PlanBox = styled.div<{ $currentPlan: string; 'data-plan': string }>`
   }
 `;
 
+const PlanMainBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+`;
+
 const PlanMain = styled.div<{ $isYearly: boolean }>`
   transform: translateY(${props => (props.$isYearly ? '0' : '26px')});
   transition: transform ${timer.default};
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
 `;
 
 const PlanDescription = styled(SmallBlueText)<{ $isYearly: boolean }>`
@@ -171,7 +175,7 @@ const DurationToggleBox = styled.div`
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  padding: 0.5rem;
+  padding: 0.75rem 0.5rem;
   border-radius: 0.5rem;
   background-color: ${theme.neutral.alabaster};
 

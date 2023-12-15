@@ -95,15 +95,14 @@ export const LargePurpleText = styled(LargeText)`
 export const LinkText = styled.span`
   font-size: 14px;
   color: ${theme.neutral.coolGray};
+  text-decoration: underline;
   letter-spacing: -0.25px;
   padding-bottom: 0px;
-  border-bottom: 1px solid ${theme.neutral.coolGray};
   cursor: pointer;
-  transition: color ${timer.default}, border-bottom ${timer.default};
+  transition: color ${timer.default};
 
   &:hover {
     color: ${theme.primary.purplishBlue};
-    border-bottom: 1px solid ${theme.primary.purplishBlue};
   }
 `;
 

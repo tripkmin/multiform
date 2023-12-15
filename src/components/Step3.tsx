@@ -1,7 +1,13 @@
 import { phrases } from 'assets/phrases';
 import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
-import { SmallText, BoldBlueText, MediumPurpleText } from './common/Fonts';
+import {
+  SmallText,
+  BoldBlueText,
+  MediumPurpleText,
+  HeadText,
+  Text,
+} from './common/Fonts';
 import { MouseEvent } from 'react';
 import { PlainButton, SolidButton } from './common/Button';
 
@@ -24,8 +30,8 @@ export default function Step3({
   return (
     <>
       <HeadBox>
-        <Head>{phrases.step3.head}</Head>
-        <SubHead>{phrases.step3.subHead}</SubHead>
+        <HeadText>{phrases.step3.head}</HeadText>
+        <Text>{phrases.step3.subHead}</Text>
       </HeadBox>
       <MainBox>
         <AddOnsBox>
@@ -90,18 +96,6 @@ const HeadBox = styled.div`
   gap: 0.8rem;
 `;
 
-const Head = styled.h1`
-  font-size: 2rem;
-  font-weight: 700;
-  color: ${theme.primary.marineBlue};
-`;
-
-const SubHead = styled.h2`
-  font-size: 1rem;
-  font-weight: 500;
-  color: ${theme.neutral.coolGray};
-`;
-
 const MainBox = styled.div``;
 
 const AddOnsBox = styled.div`
@@ -156,6 +150,9 @@ const AddOnBox = styled.div<{ $status: boolean }>`
 
 const AddOnDescriptionBox = styled.div`
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 `;
 
 const ButtonBox = styled.div`

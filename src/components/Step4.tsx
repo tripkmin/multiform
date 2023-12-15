@@ -4,13 +4,13 @@ import { theme } from 'styles/constants';
 import {
   SmallText,
   LinkText,
-  BoldPurpleText,
   BoldBlueText,
-  MediumBlueText,
   SmallBlueText,
   LargePurpleText,
+  HeadText,
+  Text,
 } from './common/Fonts';
-import { PlainButton, SolidButton, SolidPurpleButton } from './common/Button';
+import { PlainButton, SolidPurpleButton } from './common/Button';
 import { convert } from 'utils/convertFinal';
 
 interface Step4Props {
@@ -30,13 +30,13 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
   return (
     <>
       <HeadBox>
-        <Head>{phrases.step4.head}</Head>
-        <SubHead>{phrases.step4.subHead}</SubHead>
+        <HeadText>{phrases.step4.head}</HeadText>
+        <Text>{phrases.step4.subHead}</Text>
       </HeadBox>
       <MainBox>
         <ChargeDescriptionBox>
           <ChargeBox>
-            <div>
+            <ChargePlanBox>
               <BoldBlueText>
                 {final.plan} ({final.planDuration})
               </BoldBlueText>
@@ -53,7 +53,7 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
               >
                 Change
               </LinkText>
-            </div>
+            </ChargePlanBox>
             <BoldBlueText>
               ${final.planPrice}/{isYearly ? 'yr' : 'mo'}
             </BoldBlueText>
@@ -102,24 +102,18 @@ const HeadBox = styled.div`
   gap: 0.8rem;
 `;
 
-const Head = styled.h1`
-  font-size: 2rem;
-  font-weight: 700;
-  color: ${theme.primary.marineBlue};
-`;
-
-const SubHead = styled.h2`
-  font-size: 1rem;
-  font-weight: 500;
-  color: ${theme.neutral.coolGray};
-`;
-
 const MainBox = styled.div``;
 
 const ChargeBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const ChargePlanBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 `;
 
 const ChargeDescriptionBox = styled.div`
