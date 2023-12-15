@@ -8,6 +8,7 @@ export const theme = {
     paleMarinBlue: 'hsl(214, 44%, 45%)',
   },
   neutral: {
+    darkGray: 'hsl(0, 0%, 47%)',
     coolGray: 'hsl(231, 11%, 63%)',
     lightGray: 'hsl(229, 24%, 87%)',
     magnolia: 'hsl(217, 100%, 97%)',

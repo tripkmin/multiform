@@ -83,7 +83,7 @@ const GlobalStyles = createGlobalStyle`
     }
 
     input&:focus,
-    textarea&:focus{
+    textarea&:focus {
       outline: none;
     }
 

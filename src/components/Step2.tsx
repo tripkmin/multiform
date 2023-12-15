@@ -55,9 +55,27 @@ export default function Step2({
           ))}
         </PlansBox>
         <DurationToggleBox>
-          <Monthly $isYearly={isYearly}>Monthly</Monthly>
+          <CheckLabel
+            tabIndex={1}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                isYearlyToggler(e as unknown as ChangeEvent<HTMLInputElement>);
+              }
+            }}
+            $isYearly={!isYearly}>
+            Monthly
+          </CheckLabel>
           <input type="checkbox" checked={isYearly} onChange={isYearlyToggler}></input>
-          <Yearly $isYearly={isYearly}>Yearly</Yearly>
+          <CheckLabel
+            tabIndex={1}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                isYearlyToggler(e as unknown as ChangeEvent<HTMLInputElement>);
+              }
+            }}
+            $isYearly={isYearly}>
+            Yearly
+          </CheckLabel>
         </DurationToggleBox>
       </MainBox>
       <ButtonBox>
@@ -126,6 +144,10 @@ const PlanBox = styled.div<{ $currentPlan: string; 'data-plan': string }>`
   &:hover {
     background-color: ${theme.neutral.alabaster};
   }
+
+  &:focus {
+    outline: 2px solid ${theme.primary.purplishBlue};
+  }
 `;
 
 const PlanName = styled.p`
@@ -178,6 +200,10 @@ const DurationToggleBox = styled.div`
     height: 20px;
     background-color: ${theme.primary.marineBlue};
     cursor: pointer;
+
+    &:focus {
+      appearance: initial;
+    }
   }
 
   input::before {
@@ -198,12 +224,7 @@ const DurationToggleBox = styled.div`
   }
 `;
 
-const Monthly = styled.p<{ $isYearly: boolean }>`
-  color: ${props =>
-    props.$isYearly ? theme.neutral.lightGray : theme.primary.marineBlue};
-`;
-
-const Yearly = styled.p<{ $isYearly: boolean }>`
+const CheckLabel = styled.p<{ $isYearly: boolean }>`
   color: ${props =>
     props.$isYearly ? theme.primary.marineBlue : theme.neutral.lightGray};
 `;

@@ -31,9 +31,15 @@ export default function Step3({
         <AddOnsBox>
           {addOns.map(addOn => (
             <AddOnBox
+              tabIndex={1}
               onClick={addOnToggler}
               data-name={addOn.name}
-              $status={addOn.status}>
+              $status={addOn.status}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  addOnToggler(e as unknown as MouseEvent<HTMLDivElement>);
+                }
+              }}>
               <input type="checkbox" checked={addOn.status}></input>
               <AddOnDescriptionBox>
                 <StrongText>{addOn.name}</StrongText>
@@ -116,6 +122,10 @@ const AddOnBox = styled.div<{ $status: boolean }>`
 
   &:hover {
     background-color: ${theme.neutral.alabaster};
+  }
+
+  &:focus {
+    outline: 2px solid ${theme.primary.purplishBlue};
   }
 
   input {
