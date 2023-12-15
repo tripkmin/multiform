@@ -41,57 +41,63 @@ export default function Step1({
         <Text>{phrases.step1.subHead}</Text>
       </HeadBox>
       <Form>
-        <LabelBox>
-          <Label>Name</Label>
-          {isNameVaild.status && isNameBlurred ? null : (
-            <SmallRedText>{isNameVaild.message}</SmallRedText>
-          )}
-        </LabelBox>
-        <Input
-          type="text"
-          $isValid={isNameVaild.status}
-          $isBlurred={isNameBlurred}
-          value={name}
-          onChange={nameHandler}
-          onBlur={() => {
-            setIsNameBlurred(true);
-          }}
-          placeholder={phrases.step1.namePlaceHolder}
-        ></Input>
-        <LabelBox>
-          <Label>Email Address</Label>
-          {!isEmailValid && isEmailBlurred && (
-            <SmallRedText>Please enter a valid email format</SmallRedText>
-          )}
-        </LabelBox>
-        <Input
-          type="text"
-          $isValid={isEmailValid}
-          $isBlurred={isEmailBlurred}
-          value={email}
-          onChange={emailHandler}
-          onBlur={() => {
-            setIsEmailBlurred(true);
-          }}
-          placeholder={phrases.step1.emailPlaceHolder}
-        ></Input>
-        <LabelBox>
-          <Label>Phone Number</Label>
-          {!isPhoneValid && isPhoneBlurred && (
-            <SmallRedText>Please enter a valid phone number format.</SmallRedText>
-          )}
-        </LabelBox>
-        <Input
-          type="text"
-          $isValid={isPhoneValid}
-          $isBlurred={isPhoneBlurred}
-          value={phone}
-          onChange={phoneHandler}
-          onBlur={() => {
-            setIsPhoneBlurred(true);
-          }}
-          placeholder={phrases.step1.phonePlaceHolder}
-        ></Input>
+        <InputBox>
+          <LabelBox>
+            <Label>Name</Label>
+            {isNameVaild.status && isNameBlurred ? null : (
+              <SmallRedText>{isNameVaild.message}</SmallRedText>
+            )}
+          </LabelBox>
+          <Input
+            type="text"
+            $isValid={isNameVaild.status}
+            $isBlurred={isNameBlurred}
+            value={name}
+            onChange={nameHandler}
+            onBlur={() => {
+              setIsNameBlurred(true);
+            }}
+            placeholder={phrases.step1.namePlaceHolder}
+          ></Input>
+        </InputBox>
+        <InputBox>
+          <LabelBox>
+            <Label>Email Address</Label>
+            {!isEmailValid && isEmailBlurred && (
+              <SmallRedText>Please enter a valid email format</SmallRedText>
+            )}
+          </LabelBox>
+          <Input
+            type="text"
+            $isValid={isEmailValid}
+            $isBlurred={isEmailBlurred}
+            value={email}
+            onChange={emailHandler}
+            onBlur={() => {
+              setIsEmailBlurred(true);
+            }}
+            placeholder={phrases.step1.emailPlaceHolder}
+          ></Input>
+        </InputBox>
+        <InputBox>
+          <LabelBox>
+            <Label>Phone Number</Label>
+            {!isPhoneValid && isPhoneBlurred && (
+              <SmallRedText>Please enter a valid phone number format.</SmallRedText>
+            )}
+          </LabelBox>
+          <Input
+            type="text"
+            $isValid={isPhoneValid}
+            $isBlurred={isPhoneBlurred}
+            value={phone}
+            onChange={phoneHandler}
+            onBlur={() => {
+              setIsPhoneBlurred(true);
+            }}
+            placeholder={phrases.step1.phonePlaceHolder}
+          ></Input>
+        </InputBox>
       </Form>
       <ButtonBox>
         <SolidButton
@@ -132,6 +138,12 @@ const Input = styled.input<{ $isValid: boolean; $isBlurred: boolean }>`
   &:focus {
     border: 1px solid ${theme.primary.purplishBlue};
   }
+`;
+
+const InputBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 `;
 
 const LabelBox = styled.div`

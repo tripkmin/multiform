@@ -10,7 +10,7 @@ import {
   SmallBlueText,
   LargePurpleText,
 } from './common/Fonts';
-import { PlainButton, SolidButton } from './common/Button';
+import { PlainButton, SolidButton, SolidPurpleButton } from './common/Button';
 import { convert } from 'utils/convertFinal';
 
 interface Step4Props {
@@ -77,13 +77,13 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
         </ChargeTotalBox>
       </MainBox>
       <ButtonBox>
-        <SolidButton
+        <SolidPurpleButton
           onClick={() => {
             stepHandler(1);
           }}
         >
-          Next Step
-        </SolidButton>
+          Confirm
+        </SolidPurpleButton>
         <PlainButton
           onClick={() => {
             stepHandler(-1);
@@ -125,7 +125,7 @@ const ChargeBox = styled.div`
 const ChargeDescriptionBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.7rem;
   padding: 1rem;
   background-color: ${theme.neutral.alabaster};
   border-radius: 0.5rem;

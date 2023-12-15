@@ -1,13 +1,7 @@
 import { phrases } from 'assets/phrases';
 import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
-import {
-  SmallText,
-  BoldPurpleText,
-  BoldBlueText,
-  PurpleText,
-  MediumPurpleText,
-} from './common/Fonts';
+import { SmallText, BoldBlueText, MediumPurpleText } from './common/Fonts';
 import { MouseEvent } from 'react';
 import { PlainButton, SolidButton } from './common/Button';
 
@@ -119,7 +113,7 @@ const AddOnsBox = styled.div`
 const AddOnBox = styled.div<{ $status: boolean }>`
   display: flex;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1.25rem;
   border: 1px solid
     ${props => (props.$status ? theme.primary.purplishBlue : theme.neutral.lightGray)};
   background-color: ${props => (props.$status ? theme.neutral.alabaster : '')};

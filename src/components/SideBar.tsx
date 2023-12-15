@@ -36,7 +36,7 @@ const SideBarBox = styled.div`
       );
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
 `;
 
 const IndicatorBox = styled.div`
@@ -64,7 +64,11 @@ const Indicator = styled.span<{ $currentStep: number; $currentIdx: number }>`
   transition: color ${timer.default}, background-color ${timer.default};
 `;
 
-const IndicatorHeadBox = styled.div``;
+const IndicatorHeadBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+`;
 
 const IndicatorSubHead = styled.p`
   font-size: 14px;

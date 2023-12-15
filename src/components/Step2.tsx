@@ -1,18 +1,10 @@
-import { IconAdvanced, IconArcade, IconPro } from 'assets/icons';
 import { phrases } from 'assets/phrases';
 import { ChangeEvent, MouseEvent } from 'react';
 import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
 import { PlainButton, SolidButton } from './common/Button';
 import { PLANS } from 'assets/data';
-import {
-  SmallBlueText,
-  SmallHeadText,
-  SmallText,
-  BoldText,
-  MediumText,
-  SmallMeidumBlueText,
-} from './common/Fonts';
+import { SmallBlueText, SmallText, MediumText, MediumBlueText } from './common/Fonts';
 
 interface Step2Props {
   currentPlan: string;
@@ -53,7 +45,7 @@ export default function Step2({
               {plan.icon}
               <div>
                 <PlanMain $isYearly={isYearly}>
-                  <SmallHeadText>{plan.name}</SmallHeadText>
+                  <MediumBlueText>{plan.name}</MediumBlueText>
                   <SmallText>
                     ${isYearly ? `${plan.yearly}/yr` : `${plan.monthly}/mo`}
                   </SmallText>

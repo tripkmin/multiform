@@ -6,14 +6,6 @@ export const HeadText = styled.h1`
   font-size: 2rem;
   font-weight: 700;
   color: ${theme.primary.marineBlue};
-  line-height: 150%;
-`;
-
-export const SmallHeadText = styled.h2`
-  font-size: 16px;
-  font-weight: 500;
-  color: ${theme.primary.marineBlue};
-  line-height: 150%;
 `;
 
 // 일반 Text 스타일 관련
