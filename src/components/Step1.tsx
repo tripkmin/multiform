@@ -1,7 +1,7 @@
 import { phrases } from 'assets/phrases';
-import { ChangeEvent, useRef } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { theme } from 'styles/constants';
+import { theme, timer } from 'styles/constants';
 import { SolidButton } from './common/Button';
 
 interface Step1Props {
@@ -29,6 +29,10 @@ export default function Step1({
   emailHandler,
   phoneHandler,
 }: Step1Props) {
+  const [isNameBlurred, setIsNameBlurred] = useState(false);
+  const [isEmailBlurred, setIsEmailBlurred] = useState(false);
+  const [isPhoneBlurred, setIsPhoneBlurred] = useState(false);
+
   return (
     <>
       <HeadBox>
@@ -38,47 +42,61 @@ export default function Step1({
       <Form>
         <LabelBox>
           <Label>Name</Label>
-          {isNameVaild.status ? null : <Warning>{isNameVaild.message}</Warning>}
+          {isNameVaild.status && isNameBlurred ? null : (
+            <Warning>{isNameVaild.message}</Warning>
+          )}
         </LabelBox>
-        <input
-          onChange={nameHandler}
-          value={name}
+        <Input
           type="text"
-          placeholder={phrases.step1.namePlaceHolder}
-        ></input>
+          $isValid={isNameVaild.status}
+          $isBlurred={isNameBlurred}
+          value={name}
+          onChange={nameHandler}
+          onBlur={() => {
+            setIsNameBlurred(true);
+          }}
+          placeholder={phrases.step1.namePlaceHolder}></Input>
         <LabelBox>
           <Label>Email Address</Label>
-          {isEmailValid ? null : <Warning>Please enter a valid email format</Warning>}
+          {!isEmailValid && isEmailBlurred && (
+            <Warning>Please enter a valid email format</Warning>
+          )}
         </LabelBox>
-        <input
+        <Input
           type="text"
+          $isValid={isEmailValid}
+          $isBlurred={isEmailBlurred}
           value={email}
           onChange={emailHandler}
-          placeholder={phrases.step1.emailPlaceHolder}
-        ></input>
+          onBlur={() => {
+            setIsEmailBlurred(true);
+          }}
+          placeholder={phrases.step1.emailPlaceHolder}></Input>
         <LabelBox>
           <Label>Phone Number</Label>
-          {isPhoneValid ? null : (
+          {!isPhoneValid && isPhoneBlurred && (
             <Warning>Please enter a valid phone number format.</Warning>
           )}
         </LabelBox>
-        <input
+        <Input
           type="text"
+          $isValid={isPhoneValid}
+          $isBlurred={isPhoneBlurred}
           value={phone}
           onChange={phoneHandler}
-          placeholder={phrases.step1.phonePlaceHolder}
-        ></input>
+          onBlur={() => {
+            setIsPhoneBlurred(true);
+          }}
+          placeholder={phrases.step1.phonePlaceHolder}></Input>
       </Form>
       <ButtonBox>
         <SolidButton
           onClick={() => {
             stepHandler(1);
           }}
-          disabled={!isNameVaild || !isEmailValid || !isPhoneValid}
-        >
+          disabled={!isNameVaild || !isEmailValid || !isPhoneValid}>
           Next Step
         </SolidButton>
-        {/* <button>Go Back</button> */}
       </ButtonBox>
     </>
   );
@@ -96,10 +114,9 @@ const Head = styled.h1`
   color: ${theme.primary.marineBlue};
 `;
 
-const SubHead = styled.h2`
-  font-size: 1rem;
-  font-weight: 500;
+const SubHead = styled.p`
   color: ${theme.neutral.coolGray};
+  line-height: 150%;
 `;
 
 const Form = styled.form`
@@ -111,19 +128,20 @@ const Form = styled.form`
     font-size: 14px;
     font-weight: 700;
   }
+`;
 
-  input {
-    border: 1px solid ${theme.neutral.lightGray};
-    padding: 0.8rem;
-    border-radius: 0.5rem;
+const Input = styled.input<{ $isValid: boolean; $isBlurred: boolean }>`
+  border: 1px solid
+    ${props =>
+      !props.$isValid && props.$isBlurred
+        ? theme.primary.strawberryRed
+        : theme.neutral.lightGray};
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  transition: border ${timer.default};
 
-    &:focus {
-      border: 1px solid ${theme.primary.marineBlue};
-    }
-
-    &:invalid {
-      border: 1px solid ${theme.primary.strawberryRed};
-    }
+  &:focus {
+    border: 1px solid ${theme.primary.purplishBlue};
   }
 `;
 
@@ -136,6 +154,7 @@ const LabelBox = styled.div`
 const Label = styled.label`
   font-size: 14px;
   font-weight: 700;
+  color: ${theme.primary.marineBlue};
 `;
 
 const Warning = styled.p`
