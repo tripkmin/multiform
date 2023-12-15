@@ -161,9 +161,8 @@ export default function MultiForm() {
   return (
     <MultiFormBox>
       <SideBar currentStep={state.currentStep} />
-
-      <StepBox>
-        {state.currentStep === 1 && (
+      {state.currentStep === 1 && (
+        <StepBox>
           <Step1
             name={state.name}
             email={state.email}
@@ -176,8 +175,10 @@ export default function MultiForm() {
             emailHandler={emailHandler}
             phoneHandler={phoneHandler}
           />
-        )}
-        {state.currentStep === 2 && (
+        </StepBox>
+      )}
+      {state.currentStep === 2 && (
+        <StepBox>
           <Step2
             stepHandler={stepHandler}
             currentPlan={state.plan}
@@ -185,31 +186,40 @@ export default function MultiForm() {
             planHandler={planHandler}
             isYearlyToggler={isYearlyToggler}
           />
-        )}
-        {state.currentStep === 3 && (
+        </StepBox>
+      )}
+      {state.currentStep === 3 && (
+        <StepBox>
           <Step3
             stepHandler={stepHandler}
             isYearly={state.isYearly}
             addOns={state.addOns}
             addOnToggler={addOnToggler}
           />
-        )}
-        {state.currentStep === 4 && (
+        </StepBox>
+      )}
+      {state.currentStep === 4 && (
+        <StepBox>
           <Step4
             plan={state.plan}
             isYearly={state.isYearly}
             addOns={state.addOns}
             stepHandler={stepHandler}
           />
-        )}
-        {state.currentStep === 5 && <StepComplete />}
-      </StepBox>
+        </StepBox>
+      )}
+      {state.currentStep === 5 && (
+        <StepFinishBox>
+          <StepComplete />
+        </StepFinishBox>
+      )}
     </MultiFormBox>
   );
 }
 
 const MultiFormBox = styled.div`
   display: flex;
+  align-items: center;
   width: 1024px;
   padding: 1rem;
   border-radius: 1rem;
@@ -222,8 +232,10 @@ const MultiFormBox = styled.div`
 `;
 
 const StepBox = styled.div`
+  height: 585px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 2.5rem;
   padding: 3rem 5rem;
   flex-grow: 1;
@@ -234,4 +246,8 @@ const StepBox = styled.div`
     padding: 1rem;
     border-radius: 0.5rem;
   }
+`;
+
+const StepFinishBox = styled(StepBox)`
+  justify-content: center;
 `;

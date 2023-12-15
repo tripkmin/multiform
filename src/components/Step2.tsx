@@ -31,18 +31,25 @@ export default function Step2({
         <PlansBox>
           {PLANS.map(plan => (
             <PlanBox
+              tabIndex={1}
               $currentPlan={currentPlan}
               data-plan={plan.name}
               onClick={planHandler}
               key={plan.name}
-            >
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  planHandler(e as unknown as MouseEvent<HTMLDivElement>);
+                }
+              }}>
               {plan.icon}
               <div>
-                <PlanName>{plan.name}</PlanName>
-                <PlanDuration>
-                  ${isYearly ? `${plan.yearly}/yr` : `${plan.monthly}/mo`}
-                </PlanDuration>
-                {isYearly && <PlanDescription>2 months free</PlanDescription>}
+                <PlanMain $isYearly={isYearly}>
+                  <PlanName>{plan.name}</PlanName>
+                  <PlanDuration>
+                    ${isYearly ? `${plan.yearly}/yr` : `${plan.monthly}/mo`}
+                  </PlanDuration>
+                </PlanMain>
+                <PlanDescription $isYearly={isYearly}>2 months free</PlanDescription>
               </div>
             </PlanBox>
           ))}
@@ -57,15 +64,13 @@ export default function Step2({
         <SolidButton
           onClick={() => {
             stepHandler(1);
-          }}
-        >
+          }}>
           Next Step
         </SolidButton>
         <PlainButton
           onClick={() => {
             stepHandler(-1);
-          }}
-        >
+          }}>
           Go Back
         </PlainButton>
       </ButtonBox>
@@ -130,16 +135,24 @@ const PlanName = styled.p`
   letter-spacing: -0.25px;
 `;
 
+const PlanMain = styled.div<{ $isYearly: boolean }>`
+  transform: translateY(${props => (props.$isYearly ? '0' : '26px')});
+  transition: transform ${timer.default};
+`;
+
 const PlanDuration = styled.p`
   font-size: 14px;
   font-weight: 500;
   color: ${theme.neutral.coolGray};
 `;
 
-const PlanDescription = styled.p`
+const PlanDescription = styled.p<{ $isYearly: boolean }>`
   font-size: 14px;
   font-weight: 500;
   color: ${theme.primary.marineBlue};
+  opacity: ${props => (props.$isYearly ? 1 : 0)};
+  transition: opacity ${timer.default};
+  /* transform: translateY(${props => (props.$isYearly ? '0' : '')}); */
 `;
 
 const DurationToggleBox = styled.div`

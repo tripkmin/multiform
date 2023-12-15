@@ -33,8 +33,7 @@ export default function Step3({
             <AddOnBox
               onClick={addOnToggler}
               data-name={addOn.name}
-              $status={addOn.status}
-            >
+              $status={addOn.status}>
               <input type="checkbox" checked={addOn.status}></input>
               <AddOnDescriptionBox>
                 <StrongText>{addOn.name}</StrongText>
@@ -62,15 +61,13 @@ export default function Step3({
         <SolidButton
           onClick={() => {
             stepHandler(1);
-          }}
-        >
+          }}>
           Next Step
         </SolidButton>
         <PlainButton
           onClick={() => {
             stepHandler(-1);
-          }}
-        >
+          }}>
           Go Back
         </PlainButton>
       </ButtonBox>
@@ -107,7 +104,7 @@ const AddOnsBox = styled.div`
 const AddOnBox = styled.div<{ $status: boolean }>`
   display: flex;
   align-items: center;
-  padding: 1rem 1.5rem;
+  padding: 0.5rem 1rem;
   border: 1px solid
     ${props => (props.$status ? theme.primary.purplishBlue : theme.neutral.lightGray)};
   background-color: ${props => (props.$status ? theme.neutral.alabaster : '')};

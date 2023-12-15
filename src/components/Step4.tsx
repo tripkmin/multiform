@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { theme } from 'styles/constants';
 import { DescriptionText, PriceText, StrongText } from './common/Fonts';
 import { PlainButton, SolidButton } from './common/Button';
-import { PLANS } from 'assets/data';
 import { convert } from 'utils/convertFinal';
 
 interface Step4Props {
@@ -36,8 +35,7 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
               <DescriptionText
                 onClick={() => {
                   stepHandler(-2);
-                }}
-              >
+                }}>
                 Change
               </DescriptionText>
             </div>
@@ -58,7 +56,7 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
           <ChargeBox>
             <DescriptionText>Total (per month)</DescriptionText>
             <StrongText>
-              +${final.totalPrice}/{isYearly ? 'yr' : 'mo'}
+              ${final.totalPrice}/{isYearly ? 'yr' : 'mo'}
             </StrongText>
           </ChargeBox>
         </ChargeTotalBox>
@@ -67,15 +65,13 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
         <SolidButton
           onClick={() => {
             stepHandler(1);
-          }}
-        >
+          }}>
           Next Step
         </SolidButton>
         <PlainButton
           onClick={() => {
             stepHandler(-1);
-          }}
-        >
+          }}>
           Go Back
         </PlainButton>
       </ButtonBox>

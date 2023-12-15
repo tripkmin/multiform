@@ -1,6 +1,6 @@
 import { phrases } from 'assets/phrases';
 import styled from 'styled-components';
-import { theme } from 'styles/constants';
+import { theme, timer } from 'styles/constants';
 
 export default function SideBar({ currentStep }: { currentStep: number }) {
   return (
@@ -61,6 +61,7 @@ const Indicator = styled.span<{ $currentStep: number; $currentIdx: number }>`
   border-radius: 50%;
   font-weight: 700;
   font-size: 14px;
+  transition: color ${timer.default}, background-color ${timer.default};
 `;
 
 const IndicatorHeadBox = styled.div``;
