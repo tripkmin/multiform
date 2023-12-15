@@ -1,8 +1,9 @@
 import { phrases } from 'assets/phrases';
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
 import { SolidButton } from './common/Button';
+import { HeadText, Label, Text, SmallRedText } from './common/Fonts';
 
 interface Step1Props {
   name: string;
@@ -36,14 +37,14 @@ export default function Step1({
   return (
     <>
       <HeadBox>
-        <Head>{phrases.step1.head}</Head>
-        <SubHead>{phrases.step1.subHead}</SubHead>
+        <HeadText>{phrases.step1.head}</HeadText>
+        <Text>{phrases.step1.subHead}</Text>
       </HeadBox>
       <Form>
         <LabelBox>
           <Label>Name</Label>
           {isNameVaild.status && isNameBlurred ? null : (
-            <Warning>{isNameVaild.message}</Warning>
+            <SmallRedText>{isNameVaild.message}</SmallRedText>
           )}
         </LabelBox>
         <Input
@@ -55,11 +56,12 @@ export default function Step1({
           onBlur={() => {
             setIsNameBlurred(true);
           }}
-          placeholder={phrases.step1.namePlaceHolder}></Input>
+          placeholder={phrases.step1.namePlaceHolder}
+        ></Input>
         <LabelBox>
           <Label>Email Address</Label>
           {!isEmailValid && isEmailBlurred && (
-            <Warning>Please enter a valid email format</Warning>
+            <SmallRedText>Please enter a valid email format</SmallRedText>
           )}
         </LabelBox>
         <Input
@@ -71,11 +73,12 @@ export default function Step1({
           onBlur={() => {
             setIsEmailBlurred(true);
           }}
-          placeholder={phrases.step1.emailPlaceHolder}></Input>
+          placeholder={phrases.step1.emailPlaceHolder}
+        ></Input>
         <LabelBox>
           <Label>Phone Number</Label>
           {!isPhoneValid && isPhoneBlurred && (
-            <Warning>Please enter a valid phone number format.</Warning>
+            <SmallRedText>Please enter a valid phone number format.</SmallRedText>
           )}
         </LabelBox>
         <Input
@@ -87,14 +90,16 @@ export default function Step1({
           onBlur={() => {
             setIsPhoneBlurred(true);
           }}
-          placeholder={phrases.step1.phonePlaceHolder}></Input>
+          placeholder={phrases.step1.phonePlaceHolder}
+        ></Input>
       </Form>
       <ButtonBox>
         <SolidButton
           onClick={() => {
             stepHandler(1);
           }}
-          disabled={!isNameVaild || !isEmailValid || !isPhoneValid}>
+          disabled={!isNameVaild || !isEmailValid || !isPhoneValid}
+        >
           Next Step
         </SolidButton>
       </ButtonBox>
@@ -108,26 +113,10 @@ const HeadBox = styled.div`
   gap: 0.8rem;
 `;
 
-const Head = styled.h1`
-  font-size: 2rem;
-  font-weight: 700;
-  color: ${theme.primary.marineBlue};
-`;
-
-const SubHead = styled.p`
-  color: ${theme.neutral.coolGray};
-  line-height: 150%;
-`;
-
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-
-  label {
-    font-size: 14px;
-    font-weight: 700;
-  }
 `;
 
 const Input = styled.input<{ $isValid: boolean; $isBlurred: boolean }>`
@@ -149,18 +138,6 @@ const LabelBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
-
-const Label = styled.label`
-  font-size: 14px;
-  font-weight: 700;
-  color: ${theme.primary.marineBlue};
-`;
-
-const Warning = styled.p`
-  font-size: 14px;
-  color: ${theme.primary.strawberryRed};
-  line-height: 100%;
 `;
 
 const ButtonBox = styled.div`

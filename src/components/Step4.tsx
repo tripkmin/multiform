@@ -1,7 +1,15 @@
 import { phrases } from 'assets/phrases';
 import styled from 'styled-components';
 import { theme } from 'styles/constants';
-import { DescriptionText, LinkText, PriceText, StrongText } from './common/Fonts';
+import {
+  SmallText,
+  LinkText,
+  BoldPurpleText,
+  BoldBlueText,
+  MediumBlueText,
+  SmallBlueText,
+  LargePurpleText,
+} from './common/Fonts';
 import { PlainButton, SolidButton } from './common/Button';
 import { convert } from 'utils/convertFinal';
 
@@ -29,9 +37,9 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
         <ChargeDescriptionBox>
           <ChargeBox>
             <div>
-              <StrongText>
+              <BoldBlueText>
                 {final.plan} ({final.planDuration})
-              </StrongText>
+              </BoldBlueText>
               <LinkText
                 tabIndex={1}
                 onClick={() => {
@@ -41,29 +49,30 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
                   if (e.key === 'Enter' || e.key === ' ') {
                     stepHandler(-2);
                   }
-                }}>
+                }}
+              >
                 Change
               </LinkText>
             </div>
-            <StrongText>
+            <BoldBlueText>
               ${final.planPrice}/{isYearly ? 'yr' : 'mo'}
-            </StrongText>
+            </BoldBlueText>
           </ChargeBox>
           {final.addOns.map(el => (
             <ChargeBox>
-              <DescriptionText>{el.name}</DescriptionText>
-              <StrongText>
+              <SmallText>{el.name}</SmallText>
+              <SmallBlueText>
                 +${el.price}/{isYearly ? 'yr' : 'mo'}
-              </StrongText>
+              </SmallBlueText>
             </ChargeBox>
           ))}
         </ChargeDescriptionBox>
         <ChargeTotalBox>
           <ChargeBox>
-            <DescriptionText>Total (per month)</DescriptionText>
-            <PriceText>
+            <SmallText>Total (per month)</SmallText>
+            <LargePurpleText>
               ${final.totalPrice}/{isYearly ? 'yr' : 'mo'}
-            </PriceText>
+            </LargePurpleText>
           </ChargeBox>
         </ChargeTotalBox>
       </MainBox>
@@ -71,13 +80,15 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
         <SolidButton
           onClick={() => {
             stepHandler(1);
-          }}>
+          }}
+        >
           Next Step
         </SolidButton>
         <PlainButton
           onClick={() => {
             stepHandler(-1);
-          }}>
+          }}
+        >
           Go Back
         </PlainButton>
       </ButtonBox>

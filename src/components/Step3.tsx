@@ -1,7 +1,13 @@
 import { phrases } from 'assets/phrases';
 import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
-import { DescriptionText, PriceText, StrongText } from './common/Fonts';
+import {
+  SmallText,
+  BoldPurpleText,
+  BoldBlueText,
+  PurpleText,
+  MediumPurpleText,
+} from './common/Fonts';
 import { MouseEvent } from 'react';
 import { PlainButton, SolidButton } from './common/Button';
 
@@ -39,25 +45,26 @@ export default function Step3({
                 if (e.key === 'Enter' || e.key === ' ') {
                   addOnToggler(e as unknown as MouseEvent<HTMLDivElement>);
                 }
-              }}>
+              }}
+            >
               <input type="checkbox" checked={addOn.status}></input>
               <AddOnDescriptionBox>
-                <StrongText>{addOn.name}</StrongText>
-                <DescriptionText>
+                <BoldBlueText>{addOn.name}</BoldBlueText>
+                <SmallText>
                   {phrases.step3.addOns.find(el => el.name === addOn.name)?.name}
-                </DescriptionText>
+                </SmallText>
               </AddOnDescriptionBox>
               {isYearly ? (
-                <PriceText>
+                <MediumPurpleText>
                   +${phrases.step3.addOns.find(el => el.name === addOn.name)?.yearlyPrice}
                   /yr
-                </PriceText>
+                </MediumPurpleText>
               ) : (
-                <PriceText>
+                <MediumPurpleText>
                   +$
                   {phrases.step3.addOns.find(el => el.name === addOn.name)?.monthlyPrice}
                   /mo
-                </PriceText>
+                </MediumPurpleText>
               )}
             </AddOnBox>
           ))}
@@ -67,13 +74,15 @@ export default function Step3({
         <SolidButton
           onClick={() => {
             stepHandler(1);
-          }}>
+          }}
+        >
           Next Step
         </SolidButton>
         <PlainButton
           onClick={() => {
             stepHandler(-1);
-          }}>
+          }}
+        >
           Go Back
         </PlainButton>
       </ButtonBox>
@@ -153,18 +162,6 @@ const AddOnBox = styled.div<{ $status: boolean }>`
 
 const AddOnDescriptionBox = styled.div`
   flex-grow: 1;
-`;
-
-const PlanName = styled.p`
-  font-size: 16px;
-  font-weight: 500;
-  color: ${theme.primary.marineBlue};
-  letter-spacing: -0.25px;
-`;
-const PlanDuration = styled.p`
-  font-size: 14px;
-  font-weight: 500;
-  color: ${theme.neutral.coolGray};
 `;
 
 const ButtonBox = styled.div`

@@ -5,6 +5,14 @@ import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
 import { PlainButton, SolidButton } from './common/Button';
 import { PLANS } from 'assets/data';
+import {
+  SmallBlueText,
+  SmallHeadText,
+  SmallText,
+  BoldText,
+  MediumText,
+  SmallMeidumBlueText,
+} from './common/Fonts';
 
 interface Step2Props {
   currentPlan: string;
@@ -40,14 +48,15 @@ export default function Step2({
                 if (e.key === 'Enter' || e.key === ' ') {
                   planHandler(e as unknown as MouseEvent<HTMLDivElement>);
                 }
-              }}>
+              }}
+            >
               {plan.icon}
               <div>
                 <PlanMain $isYearly={isYearly}>
-                  <PlanName>{plan.name}</PlanName>
-                  <PlanDuration>
+                  <SmallHeadText>{plan.name}</SmallHeadText>
+                  <SmallText>
                     ${isYearly ? `${plan.yearly}/yr` : `${plan.monthly}/mo`}
-                  </PlanDuration>
+                  </SmallText>
                 </PlanMain>
                 <PlanDescription $isYearly={isYearly}>2 months free</PlanDescription>
               </div>
@@ -62,7 +71,8 @@ export default function Step2({
                 isYearlyToggler(e as unknown as ChangeEvent<HTMLInputElement>);
               }
             }}
-            $isYearly={!isYearly}>
+            $isYearly={!isYearly}
+          >
             Monthly
           </CheckLabel>
           <input type="checkbox" checked={isYearly} onChange={isYearlyToggler}></input>
@@ -73,7 +83,8 @@ export default function Step2({
                 isYearlyToggler(e as unknown as ChangeEvent<HTMLInputElement>);
               }
             }}
-            $isYearly={isYearly}>
+            $isYearly={isYearly}
+          >
             Yearly
           </CheckLabel>
         </DurationToggleBox>
@@ -82,13 +93,15 @@ export default function Step2({
         <SolidButton
           onClick={() => {
             stepHandler(1);
-          }}>
+          }}
+        >
           Next Step
         </SolidButton>
         <PlainButton
           onClick={() => {
             stepHandler(-1);
-          }}>
+          }}
+        >
           Go Back
         </PlainButton>
       </ButtonBox>
@@ -150,31 +163,14 @@ const PlanBox = styled.div<{ $currentPlan: string; 'data-plan': string }>`
   }
 `;
 
-const PlanName = styled.p`
-  font-size: 16px;
-  font-weight: 500;
-  color: ${theme.primary.marineBlue};
-  letter-spacing: -0.25px;
-`;
-
 const PlanMain = styled.div<{ $isYearly: boolean }>`
   transform: translateY(${props => (props.$isYearly ? '0' : '26px')});
   transition: transform ${timer.default};
 `;
 
-const PlanDuration = styled.p`
-  font-size: 14px;
-  font-weight: 500;
-  color: ${theme.neutral.coolGray};
-`;
-
-const PlanDescription = styled.p<{ $isYearly: boolean }>`
-  font-size: 14px;
-  font-weight: 500;
-  color: ${theme.primary.marineBlue};
+const PlanDescription = styled(SmallBlueText)<{ $isYearly: boolean }>`
   opacity: ${props => (props.$isYearly ? 1 : 0)};
   transition: opacity ${timer.default};
-  /* transform: translateY(${props => (props.$isYearly ? '0' : '')}); */
 `;
 
 const DurationToggleBox = styled.div`
@@ -187,8 +183,6 @@ const DurationToggleBox = styled.div`
   background-color: ${theme.neutral.alabaster};
 
   p {
-    font-size: 16px;
-    font-weight: 500;
     transition: color ${timer.default};
   }
 
@@ -224,7 +218,7 @@ const DurationToggleBox = styled.div`
   }
 `;
 
-const CheckLabel = styled.p<{ $isYearly: boolean }>`
+const CheckLabel = styled(MediumText)<{ $isYearly: boolean }>`
   color: ${props =>
     props.$isYearly ? theme.primary.marineBlue : theme.neutral.lightGray};
 `;

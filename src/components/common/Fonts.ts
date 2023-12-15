@@ -1,24 +1,103 @@
 import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
 
-export const StrongText = styled.p`
-  font-size: 16px;
+// Head Text 스타일 관련
+export const HeadText = styled.h1`
+  font-size: 2rem;
   font-weight: 700;
   color: ${theme.primary.marineBlue};
-  letter-spacing: -0.25px;
+  line-height: 150%;
 `;
 
-export const DescriptionText = styled.p`
-  font-size: 14px;
+export const SmallHeadText = styled.h2`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${theme.primary.marineBlue};
+  line-height: 150%;
+`;
+
+// 일반 Text 스타일 관련
+export const Text = styled.p`
+  font-size: 16px;
   color: ${theme.neutral.coolGray};
   letter-spacing: -0.25px;
 `;
 
-export const PriceText = styled.p`
-  font-size: 16px;
-  font-weight: 700;
+export const BlueText = styled(Text)`
+  color: ${theme.primary.marineBlue};
+`;
+
+export const PurpleText = styled(Text)`
   color: ${theme.primary.purplishBlue};
-  letter-spacing: -0.25px;
+`;
+
+export const MediumText = styled(Text)`
+  font-weight: 500;
+`;
+
+export const MediumBlueText = styled(MediumText)`
+  color: ${theme.primary.marineBlue};
+`;
+
+export const MediumPurpleText = styled(MediumText)`
+  color: ${theme.primary.purplishBlue};
+`;
+
+export const BoldText = styled(Text)`
+  font-weight: 700;
+`;
+
+export const BoldBlueText = styled(BoldText)`
+  color: ${theme.primary.marineBlue};
+`;
+
+export const BoldPurpleText = styled(BoldText)`
+  color: ${theme.primary.purplishBlue};
+`;
+
+export const SmallText = styled(Text)`
+  font-size: 14px;
+`;
+
+export const SmallRedText = styled(SmallText)`
+  color: ${theme.primary.strawberryRed};
+`;
+
+export const SmallBlueText = styled(SmallText)`
+  color: ${theme.primary.marineBlue};
+`;
+
+export const SmallPurpleText = styled(SmallText)`
+  color: ${theme.primary.purplishBlue};
+`;
+
+export const SmallMeidumText = styled(SmallText)`
+  font-weight: 500;
+`;
+
+export const SmallMeidumRedText = styled(SmallMeidumText)`
+  color: ${theme.primary.strawberryRed};
+`;
+
+export const SmallMeidumBlueText = styled(SmallMeidumText)`
+  color: ${theme.primary.marineBlue};
+`;
+
+export const SmallMeidumPurpleText = styled(SmallMeidumText)`
+  color: ${theme.primary.purplishBlue};
+`;
+
+export const LargeText = styled(Text)`
+  font-size: 1.2rem;
+  font-weight: 700;
+`;
+
+export const LargeBlueText = styled(LargeText)`
+  color: ${theme.primary.marineBlue};
+`;
+
+export const LargePurpleText = styled(LargeText)`
+  color: ${theme.primary.purplishBlue};
 `;
 
 export const LinkText = styled.span`
@@ -34,4 +113,10 @@ export const LinkText = styled.span`
     color: ${theme.primary.purplishBlue};
     border-bottom: 1px solid ${theme.primary.purplishBlue};
   }
+`;
+
+export const Label = styled.label`
+  font-size: 14px;
+  font-weight: 700;
+  color: ${theme.primary.marineBlue};
 `;

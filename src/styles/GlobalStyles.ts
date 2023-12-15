@@ -38,8 +38,8 @@ const GlobalStyles = createGlobalStyle`
       background: transparent;
       cursor: pointer;
     }
-    p, span, textarea {
-        line-height: 180%;
+    p, span, textarea, label {
+        line-height: 150%;
     }
     strong {
       font-weight: 700;
