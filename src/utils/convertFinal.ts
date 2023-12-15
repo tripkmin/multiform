@@ -6,9 +6,10 @@ export const convert = (
   addOns: { name: string; status: boolean }[]
 ) => {
   const selectedPlan = PLANS.find(PLAN => PLAN.name === plan);
+  const selectedAddOn = addOns.filter(addOn => addOn.status);
   const planPrice = isYearly ? selectedPlan?.yearly : selectedPlan?.monthly;
 
-  const totalPrice = addOns.reduce((acc, addOn) => {
+  const totalPrice = selectedAddOn.reduce((acc, addOn) => {
     const addOnInfo = ADD_ONS.find(ADD_ON => ADD_ON.name === addOn.name);
     const addOnPrice = isYearly ? addOnInfo?.yearlyPrice : addOnInfo?.monthlyPrice;
     return acc + (addOnPrice || 0); // 0을 더하여 undefined를 방지
@@ -18,7 +19,7 @@ export const convert = (
     planDuration: isYearly ? 'Yearly' : 'Monthly',
     plan: plan,
     planPrice: planPrice,
-    addOns: addOns.map(addOn => ({
+    addOns: selectedAddOn.map(addOn => ({
       name: addOn.name,
       price: isYearly
         ? ADD_ONS.find(ADD_ON => ADD_ON.name === addOn.name)?.yearlyPrice
