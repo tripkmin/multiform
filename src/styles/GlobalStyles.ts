@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
-import { theme } from './constants';
+import { size, theme } from './constants';
 
 const GlobalStyles = createGlobalStyle`
     ${reset}
@@ -93,6 +93,10 @@ const GlobalStyles = createGlobalStyle`
       justify-content: center;
       align-items: center;
       background-color: ${theme.neutral.magnolia};
+
+      @media screen and (max-width: ${size.desktop}){
+        display:block;
+      }
     }
     
 

@@ -1,6 +1,6 @@
 import { phrases } from 'assets/phrases';
 import styled from 'styled-components';
-import { theme, timer } from 'styles/constants';
+import { size, theme, timer } from 'styles/constants';
 
 export default function SideBar({ currentStep }: { currentStep: number }) {
   return (
@@ -37,6 +37,24 @@ const SideBarBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  @media screen and (max-width: ${size.desktop}) {
+    width: 100%;
+    flex-basis: 200px;
+    flex-direction: row;
+    background-image: url('./bg-sidebar-mobile.svg'),
+      linear-gradient(
+        142deg,
+        rgba(72, 62, 255, 1) 0%,
+        rgba(249, 129, 141, 1) 75%,
+        rgba(255, 175, 126, 1) 100%
+      );
+    background-size: cover;
+    border-radius: 0;
+    gap: 1rem;
+    justify-content: center;
+    align-items: flex-start;
+  }
 `;
 
 const IndicatorBox = styled.div`
@@ -68,6 +86,10 @@ const IndicatorHeadBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+
+  @media screen and (max-width: ${size.desktop}) {
+    display: none;
+  }
 `;
 
 const IndicatorSubHead = styled.p`

@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useReducer, useState } from 'react';
+import { ChangeEvent, MouseEvent, useReducer } from 'react';
 import styled from 'styled-components';
 import { size, theme } from 'styles/constants';
 import SideBar from './SideBar';
@@ -8,6 +8,7 @@ import Step3 from './Step3';
 import Step4 from './Step4';
 import StepComplete from './StepComplete';
 import { emailRegex, nameRegex, phoneRegex } from 'utils/regex';
+import { SolidButton } from './common/Button';
 
 const CHANGE_STEP = 'CHANGE_STEP' as const;
 const CHANGE_NAME = 'CHANGE_NAME' as const;
@@ -81,11 +82,11 @@ type FormState = typeof initialState;
 
 function nameChecker(name: string) {
   if (name.trim().length === 0) {
-    return { status: false, message: 'Blank input is not allowed.' };
+    return { status: false, message: 'Blank input is not allowed' };
   } else if (name.length > 30) {
-    return { status: false, message: 'Cannot exceed 30 characters.' };
+    return { status: false, message: 'Cannot exceed 30 characters' };
   } else if (!nameRegex.test(name)) {
-    return { status: false, message: 'Only English letters are allowed.' };
+    return { status: false, message: 'Only English letters are allowed' };
   } else {
     return { status: true, message: '' };
   }
@@ -159,86 +160,130 @@ export default function MultiForm() {
   };
 
   return (
-    <MultiFormBox>
-      <SideBar currentStep={state.currentStep} />
-      {state.currentStep === 1 && (
-        <StepBox>
-          <Step1
-            name={state.name}
-            email={state.email}
-            phone={state.phone}
-            isNameVaild={state.isNameVaild}
-            isEmailValid={state.isEmailValid}
-            isPhoneValid={state.isPhoneValid}
-            stepHandler={stepHandler}
-            nameHandler={nameHandler}
-            emailHandler={emailHandler}
-            phoneHandler={phoneHandler}
-          />
-        </StepBox>
-      )}
-      {state.currentStep === 2 && (
-        <StepBox>
-          <Step2
-            stepHandler={stepHandler}
-            currentPlan={state.plan}
-            isYearly={state.isYearly}
-            planHandler={planHandler}
-            isYearlyToggler={isYearlyToggler}
-          />
-        </StepBox>
-      )}
-      {state.currentStep === 3 && (
-        <StepBox>
-          <Step3
-            stepHandler={stepHandler}
-            isYearly={state.isYearly}
-            addOns={state.addOns}
-            addOnToggler={addOnToggler}
-          />
-        </StepBox>
-      )}
-      {state.currentStep === 4 && (
-        <StepBox>
-          <Step4
-            plan={state.plan}
-            isYearly={state.isYearly}
-            addOns={state.addOns}
-            stepHandler={stepHandler}
-          />
-        </StepBox>
-      )}
-      {state.currentStep === 5 && (
-        <StepFinishBox>
-          <StepComplete />
-        </StepFinishBox>
-      )}
-    </MultiFormBox>
+    <MultiFormLayout>
+      <MultiFormBox>
+        <SideBar currentStep={state.currentStep} />
+        {state.currentStep === 1 && (
+          <StepBox>
+            <Step1
+              name={state.name}
+              email={state.email}
+              phone={state.phone}
+              isNameVaild={state.isNameVaild}
+              isEmailValid={state.isEmailValid}
+              isPhoneValid={state.isPhoneValid}
+              stepHandler={stepHandler}
+              nameHandler={nameHandler}
+              emailHandler={emailHandler}
+              phoneHandler={phoneHandler}
+            />
+          </StepBox>
+        )}
+        {state.currentStep === 2 && (
+          <StepBox>
+            <Step2
+              stepHandler={stepHandler}
+              currentPlan={state.plan}
+              isYearly={state.isYearly}
+              planHandler={planHandler}
+              isYearlyToggler={isYearlyToggler}
+            />
+          </StepBox>
+        )}
+        {state.currentStep === 3 && (
+          <StepBox>
+            <Step3
+              stepHandler={stepHandler}
+              isYearly={state.isYearly}
+              addOns={state.addOns}
+              addOnToggler={addOnToggler}
+            />
+          </StepBox>
+        )}
+        {state.currentStep === 4 && (
+          <StepBox>
+            <Step4
+              plan={state.plan}
+              isYearly={state.isYearly}
+              addOns={state.addOns}
+              stepHandler={stepHandler}
+            />
+          </StepBox>
+        )}
+        {state.currentStep === 5 && (
+          <StepFinishBox>
+            <StepComplete />
+          </StepFinishBox>
+        )}
+      </MultiFormBox>
+      <ButtonLayout>
+        <ButtonBox>
+          <SolidButton>Next Step</SolidButton>
+        </ButtonBox>
+      </ButtonLayout>
+    </MultiFormLayout>
   );
 }
+
+// 나중에 layout으로 분리해서 sidebar, stepbox, mobile step button 따로 분리시키기
+const MultiFormLayout = styled.div`
+  @media screen and (max-width: ${size.desktop}) {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+`;
+
+const ButtonLayout = styled.div`
+  display: none;
+
+  @media screen and (max-width: ${size.desktop}) {
+    display: flex;
+    justify-content: center;
+    background-color: ${theme.neutral.white};
+  }
+`;
+const ButtonBox = styled.div`
+  width: 95%;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: row-reverse;
+`;
 
 const MultiFormBox = styled.div`
   display: flex;
   align-items: center;
-  width: 1024px;
+  width: 900px;
   padding: 1rem;
   border-radius: 1rem;
   background-color: ${theme.neutral.white};
   gap: 2rem;
 
   @media screen and (max-width: ${size.desktop}) {
+    flex-direction: column;
     width: 100%;
+    padding: 0;
+    border-radius: 0;
+    background-color: ${theme.neutral.magnolia};
   }
 `;
 
 const StepBox = styled.div`
-  height: 585px;
+  height: 566px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 2.5rem;
-  padding: 3rem 5rem;
+  padding: 3rem;
   flex-grow: 1;
+
+  @media screen and (max-width: ${size.desktop}) {
+    width: 95%;
+    border-radius: 1rem;
+    margin-top: -120px;
+    background-color: ${theme.neutral.white};
+    padding: 3rem 2rem;
+  }
 `;
 
 const StepFinishBox = styled(StepBox)`
