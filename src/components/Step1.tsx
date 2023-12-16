@@ -44,7 +44,7 @@ export default function Step1({
         <InputBox>
           <LabelBox>
             <Label>Name</Label>
-            {isNameVaild.status && isNameBlurred ? null : (
+            {!isNameVaild.status && isNameBlurred && (
               <SmallRedText>{isNameVaild.message}</SmallRedText>
             )}
           </LabelBox>
@@ -57,14 +57,13 @@ export default function Step1({
             onBlur={() => {
               setIsNameBlurred(true);
             }}
-            placeholder={phrases.step1.namePlaceHolder}
-          ></Input>
+            placeholder={phrases.step1.namePlaceHolder}></Input>
         </InputBox>
         <InputBox>
           <LabelBox>
             <Label>Email Address</Label>
             {!isEmailValid && isEmailBlurred && (
-              <SmallRedText>Please enter a valid email format</SmallRedText>
+              <SmallRedText>Please enter a valid email</SmallRedText>
             )}
           </LabelBox>
           <Input
@@ -76,14 +75,13 @@ export default function Step1({
             onBlur={() => {
               setIsEmailBlurred(true);
             }}
-            placeholder={phrases.step1.emailPlaceHolder}
-          ></Input>
+            placeholder={phrases.step1.emailPlaceHolder}></Input>
         </InputBox>
         <InputBox>
           <LabelBox>
             <Label>Phone Number</Label>
             {!isPhoneValid && isPhoneBlurred && (
-              <SmallRedText>Please enter a valid phone number format.</SmallRedText>
+              <SmallRedText>Please enter a valid phone number</SmallRedText>
             )}
           </LabelBox>
           <Input
@@ -95,8 +93,7 @@ export default function Step1({
             onBlur={() => {
               setIsPhoneBlurred(true);
             }}
-            placeholder={phrases.step1.phonePlaceHolder}
-          ></Input>
+            placeholder={phrases.step1.phonePlaceHolder}></Input>
         </InputBox>
       </Form>
       <ButtonBox>
@@ -104,8 +101,7 @@ export default function Step1({
           onClick={() => {
             stepHandler(1);
           }}
-          disabled={!isNameVaild.status || !isEmailValid || !isPhoneValid}
-        >
+          disabled={!isNameVaild.status || !isEmailValid || !isPhoneValid}>
           Next Step
         </SolidButton>
       </ButtonBox>
