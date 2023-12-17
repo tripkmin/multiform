@@ -1,17 +1,10 @@
-import { phrases } from 'assets/phrases';
 import { ChangeEvent, MouseEvent } from 'react';
 import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
 import { PlainButton, SolidButton } from './common/Button';
 import { PLANS } from 'assets/data';
-import {
-  SmallBlueText,
-  SmallText,
-  MediumText,
-  MediumBlueText,
-  HeadText,
-  Text,
-} from './common/Fonts';
+import { SmallBlueText, SmallText, MediumText, MediumBlueText } from './common/Fonts';
+import Header from './Header';
 
 interface Step2Props {
   currentPlan: string;
@@ -30,10 +23,7 @@ export default function Step2({
 }: Step2Props) {
   return (
     <>
-      <HeadBox>
-        <HeadText>{phrases.step2.head}</HeadText>
-        <Text>{phrases.step2.subHead}</Text>
-      </HeadBox>
+      <Header step="step2" />
       <MainBox>
         <PlansBox>
           {PLANS.map(plan => (
@@ -47,8 +37,7 @@ export default function Step2({
                 if (e.key === 'Enter' || e.key === ' ') {
                   planHandler(e as unknown as MouseEvent<HTMLDivElement>);
                 }
-              }}
-            >
+              }}>
               {plan.icon}
               <PlanMainBox>
                 <PlanMain $isYearly={isYearly}>
@@ -70,8 +59,7 @@ export default function Step2({
                 isYearlyToggler(e as unknown as ChangeEvent<HTMLInputElement>);
               }
             }}
-            $isYearly={!isYearly}
-          >
+            $isYearly={!isYearly}>
             Monthly
           </CheckLabel>
           <input type="checkbox" checked={isYearly} onChange={isYearlyToggler}></input>
@@ -82,8 +70,7 @@ export default function Step2({
                 isYearlyToggler(e as unknown as ChangeEvent<HTMLInputElement>);
               }
             }}
-            $isYearly={isYearly}
-          >
+            $isYearly={isYearly}>
             Yearly
           </CheckLabel>
         </DurationToggleBox>
@@ -93,27 +80,19 @@ export default function Step2({
           disabled={currentPlan === ''}
           onClick={() => {
             stepHandler(1);
-          }}
-        >
+          }}>
           Next Step
         </SolidButton>
         <PlainButton
           onClick={() => {
             stepHandler(-1);
-          }}
-        >
+          }}>
           Go Back
         </PlainButton>
       </ButtonBox>
     </>
   );
 }
-
-const HeadBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-`;
 
 const MainBox = styled.div`
   display: flex;

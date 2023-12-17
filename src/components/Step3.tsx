@@ -1,15 +1,10 @@
 import { phrases } from 'assets/phrases';
 import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
-import {
-  SmallText,
-  BoldBlueText,
-  MediumPurpleText,
-  HeadText,
-  Text,
-} from './common/Fonts';
+import { SmallText, BoldBlueText, MediumPurpleText } from './common/Fonts';
 import { MouseEvent } from 'react';
 import { PlainButton, SolidButton } from './common/Button';
+import Header from './Header';
 
 interface Step3Props {
   isYearly: boolean;
@@ -29,10 +24,7 @@ export default function Step3({
 }: Step3Props) {
   return (
     <>
-      <HeadBox>
-        <HeadText>{phrases.step3.head}</HeadText>
-        <Text>{phrases.step3.subHead}</Text>
-      </HeadBox>
+      <Header step="step3" />
       <MainBox>
         <AddOnsBox>
           {addOns.map(addOn => (
@@ -45,8 +37,7 @@ export default function Step3({
                 if (e.key === 'Enter' || e.key === ' ') {
                   addOnToggler(e as unknown as MouseEvent<HTMLDivElement>);
                 }
-              }}
-            >
+              }}>
               <input type="checkbox" checked={addOn.status}></input>
               <AddOnDescriptionBox>
                 <BoldBlueText>{addOn.name}</BoldBlueText>
@@ -74,27 +65,19 @@ export default function Step3({
         <SolidButton
           onClick={() => {
             stepHandler(1);
-          }}
-        >
+          }}>
           Next Step
         </SolidButton>
         <PlainButton
           onClick={() => {
             stepHandler(-1);
-          }}
-        >
+          }}>
           Go Back
         </PlainButton>
       </ButtonBox>
     </>
   );
 }
-
-const HeadBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-`;
 
 const MainBox = styled.div``;
 

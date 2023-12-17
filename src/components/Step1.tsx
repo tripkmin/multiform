@@ -3,7 +3,8 @@ import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
 import { SolidButton } from './common/Button';
-import { HeadText, Label, Text, SmallRedText } from './common/Fonts';
+import { Label, SmallRedText } from './common/Fonts';
+import Header from './Header';
 
 interface Step1Props {
   name: string;
@@ -36,10 +37,7 @@ export default function Step1({
 
   return (
     <>
-      <HeadBox>
-        <HeadText>{phrases.step1.head}</HeadText>
-        <Text>{phrases.step1.subHead}</Text>
-      </HeadBox>
+      <Header step="step1" />
       <Form>
         <InputBox>
           <LabelBox>
@@ -108,12 +106,6 @@ export default function Step1({
     </>
   );
 }
-
-const HeadBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-`;
 
 const Form = styled.form`
   display: flex;

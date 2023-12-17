@@ -1,4 +1,3 @@
-import { phrases } from 'assets/phrases';
 import styled from 'styled-components';
 import { theme } from 'styles/constants';
 import {
@@ -7,11 +6,10 @@ import {
   BoldBlueText,
   SmallBlueText,
   LargePurpleText,
-  HeadText,
-  Text,
 } from './common/Fonts';
 import { PlainButton, SolidPurpleButton } from './common/Button';
 import { convert } from 'utils/convertFinal';
+import Header from './Header';
 
 interface Step4Props {
   plan: string;
@@ -29,10 +27,7 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
 
   return (
     <>
-      <HeadBox>
-        <HeadText>{phrases.step4.head}</HeadText>
-        <Text>{phrases.step4.subHead}</Text>
-      </HeadBox>
+      <Header step="step4" />
       <MainBox>
         <ChargeDescriptionBox>
           <ChargeBox>
@@ -49,8 +44,7 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
                   if (e.key === 'Enter' || e.key === ' ') {
                     stepHandler(-2);
                   }
-                }}
-              >
+                }}>
                 Change
               </LinkText>
             </ChargePlanBox>
@@ -80,27 +74,19 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
         <SolidPurpleButton
           onClick={() => {
             stepHandler(1);
-          }}
-        >
+          }}>
           Confirm
         </SolidPurpleButton>
         <PlainButton
           onClick={() => {
             stepHandler(-1);
-          }}
-        >
+          }}>
           Go Back
         </PlainButton>
       </ButtonBox>
     </>
   );
 }
-
-const HeadBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-`;
 
 const MainBox = styled.div``;
 
