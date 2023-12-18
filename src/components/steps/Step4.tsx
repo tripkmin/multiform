@@ -6,8 +6,8 @@ import {
   BoldBlueText,
   SmallBlueText,
   LargePurpleText,
-} from './common/Fonts';
-import { convert } from 'utils/convertFinal';
+} from '../common/Fonts';
+import { getTotal } from 'utils/convertFinal';
 
 interface Step4Props {
   plan: string;
@@ -20,8 +20,7 @@ interface Step4Props {
 }
 
 export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Props) {
-  // 변수명 수정할 것
-  const final = convert(plan, isYearly, addOns);
+  const total = getTotal(plan, isYearly, addOns);
 
   return (
     <MainBox>
@@ -29,7 +28,7 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
         <ChargeBox>
           <ChargePlanBox>
             <BoldBlueText>
-              {final.plan} ({final.planDuration})
+              {total.plan} ({total.planDuration})
             </BoldBlueText>
             <LinkText
               tabIndex={1}
@@ -46,10 +45,10 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
             </LinkText>
           </ChargePlanBox>
           <BoldBlueText>
-            ${final.planPrice}/{isYearly ? 'yr' : 'mo'}
+            ${total.planPrice}/{isYearly ? 'yr' : 'mo'}
           </BoldBlueText>
         </ChargeBox>
-        {final.addOns.map(el => (
+        {total.addOns.map(el => (
           <ChargeBox>
             <SmallText>{el.name}</SmallText>
             <SmallBlueText>
@@ -62,7 +61,7 @@ export default function Step4({ plan, isYearly, addOns, stepHandler }: Step4Prop
         <ChargeBox>
           <SmallText>Total (per month)</SmallText>
           <LargePurpleText>
-            ${final.totalPrice}/{isYearly ? 'yr' : 'mo'}
+            ${total.totalPrice}/{isYearly ? 'yr' : 'mo'}
           </LargePurpleText>
         </ChargeBox>
       </ChargeTotalBox>

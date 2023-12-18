@@ -2,7 +2,7 @@ import { phrases } from 'assets/phrases';
 import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
-import { Label, SmallRedText } from './common/Fonts';
+import { Label, SmallRedText } from '../common/Fonts';
 
 interface Step1Props {
   name: string;

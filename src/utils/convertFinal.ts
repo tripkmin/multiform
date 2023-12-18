@@ -1,6 +1,6 @@
 import { ADD_ONS, PLANS } from 'assets/data';
 
-export const convert = (
+export const getTotal = (
   plan: string,
   isYearly: boolean,
   addOns: { name: string; status: boolean }[]

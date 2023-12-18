@@ -1,7 +1,7 @@
 import { phrases } from 'assets/phrases';
 import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
-import { SmallText, BoldBlueText, MediumPurpleText } from './common/Fonts';
+import { SmallText, BoldBlueText, MediumPurpleText } from '../common/Fonts';
 import { MouseEvent } from 'react';
 
 interface Step3Props {

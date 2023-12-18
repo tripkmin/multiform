@@ -2,7 +2,7 @@ import { ChangeEvent, MouseEvent } from 'react';
 import styled from 'styled-components';
 import { size, theme, timer } from 'styles/constants';
 import { PLANS } from 'assets/data';
-import { SmallBlueText, SmallText, MediumText, MediumBlueText } from './common/Fonts';
+import { SmallBlueText, SmallText, MediumText, MediumBlueText } from '../common/Fonts';
 
 interface Step2Props {
   currentPlan: string;
