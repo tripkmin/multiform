@@ -20,6 +20,7 @@
 ### ⚡ Additional Features
 
 - Utilized `useReducer` for state management logic.
+- Made all options accessible via keyboard.
 
 ## 한국어
 
@@ -43,3 +44,4 @@
 ### ⚡ 추가 기능
 
 - useReducer을 활용한 state 관리 로직을 사용
+- 키보드로 모든 옵션에 접근 가능하도록 함
