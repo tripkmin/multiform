@@ -61,8 +61,10 @@ export default function MultiFormFooter({
     },
   };
 
+  const isFinalStep = currentStep === 5;
+
   return (
-    <ButtonBox $isForMobile={isForMobile}>
+    <ButtonBox $isForMobile={isForMobile} $isFinalStep={isFinalStep}>
       {currentStepButtons[currentStep].next && (
         <SolidButton
           disabled={currentStepButtons[currentStep].disabled}
@@ -95,7 +97,7 @@ export default function MultiFormFooter({
   );
 }
 
-const ButtonBox = styled.div<{ $isForMobile: boolean }>`
+const ButtonBox = styled.div<{ $isFinalStep: boolean; $isForMobile: boolean }>`
   ${props =>
     props.$isForMobile
       ? `display: none;`
@@ -117,5 +119,6 @@ const ButtonBox = styled.div<{ $isForMobile: boolean }>`
             background-color: ${theme.neutral.white};
           `
         : `display: none;`}
+    ${props => (props.$isFinalStep ? 'display: none;' : '')}
   }
 `;

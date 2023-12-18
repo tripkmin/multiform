@@ -1,6 +1,6 @@
 import { ChangeEvent, MouseEvent } from 'react';
 import styled from 'styled-components';
-import { theme, timer } from 'styles/constants';
+import { size, theme, timer } from 'styles/constants';
 import { PLANS } from 'assets/data';
 import { SmallBlueText, SmallText, MediumText, MediumBlueText } from './common/Fonts';
 
@@ -23,6 +23,7 @@ export default function Step2({
         {PLANS.map(plan => (
           <PlanBox
             tabIndex={1}
+            $isYearly={isYearly}
             $currentPlan={currentPlan}
             data-plan={plan.name}
             onClick={planHandler}
@@ -85,9 +86,17 @@ const PlansBox = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1rem;
+
+  @media screen and (max-width: ${size.desktop}) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
-const PlanBox = styled.div<{ $currentPlan: string; 'data-plan': string }>`
+const PlanBox = styled.div<{
+  $isYearly: boolean;
+  $currentPlan: string;
+  'data-plan': string;
+}>`
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -109,6 +118,14 @@ const PlanBox = styled.div<{ $currentPlan: string; 'data-plan': string }>`
   &:focus {
     outline: 2px solid ${theme.primary.purplishBlue};
   }
+
+  @media screen and (max-width: ${size.desktop}) {
+    flex-direction: row;
+    gap: 1rem;
+    height: ${props => (props.$isYearly ? '104px' : '80px')};
+    transition: height ${timer.default};
+    overflow: hidden;
+  }
 `;
 
 const PlanMainBox = styled.div`
@@ -123,6 +140,10 @@ const PlanMain = styled.div<{ $isYearly: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
+
+  @media screen and (max-width: ${size.desktop}) {
+    transform: translateY(0);
+  }
 `;
 
 const PlanDescription = styled(SmallBlueText)<{ $isYearly: boolean }>`
