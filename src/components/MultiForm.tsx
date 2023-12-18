@@ -259,6 +259,9 @@ const ButtonLayout = styled.div`
   display: none;
 
   @media screen and (max-width: ${size.desktop}) {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     display: flex;
     justify-content: center;
     background-color: ${theme.neutral.white};
