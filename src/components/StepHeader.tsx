@@ -2,7 +2,6 @@ import { phrases } from 'assets/phrases';
 import styled from 'styled-components';
 import { theme } from 'styles/constants';
 
-// 임시
 export default function StepHeader() {
   return (
     <HeadBox>

@@ -1,15 +1,12 @@
 import { ChangeEvent, MouseEvent } from 'react';
 import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
-import { PlainButton, SolidButton } from './common/Button';
 import { PLANS } from 'assets/data';
 import { SmallBlueText, SmallText, MediumText, MediumBlueText } from './common/Fonts';
-import Header from './Header';
 
 interface Step2Props {
   currentPlan: string;
   isYearly: boolean;
-  stepHandler: (num: number) => void;
   planHandler: (e: MouseEvent<HTMLDivElement>) => void;
   isYearlyToggler: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -17,80 +14,64 @@ interface Step2Props {
 export default function Step2({
   currentPlan,
   isYearly,
-  stepHandler,
   planHandler,
   isYearlyToggler,
 }: Step2Props) {
   return (
-    <>
-      <Header step="step2" />
-      <MainBox>
-        <PlansBox>
-          {PLANS.map(plan => (
-            <PlanBox
-              tabIndex={1}
-              $currentPlan={currentPlan}
-              data-plan={plan.name}
-              onClick={planHandler}
-              key={plan.name}
-              onKeyDown={e => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  planHandler(e as unknown as MouseEvent<HTMLDivElement>);
-                }
-              }}>
-              {plan.icon}
-              <PlanMainBox>
-                <PlanMain $isYearly={isYearly}>
-                  <MediumBlueText>{plan.name}</MediumBlueText>
-                  <SmallText>
-                    ${isYearly ? `${plan.yearly}/yr` : `${plan.monthly}/mo`}
-                  </SmallText>
-                </PlanMain>
-                <PlanDescription $isYearly={isYearly}>2 months free</PlanDescription>
-              </PlanMainBox>
-            </PlanBox>
-          ))}
-        </PlansBox>
-        <DurationToggleBox>
-          <CheckLabel
+    <MainBox>
+      <PlansBox>
+        {PLANS.map(plan => (
+          <PlanBox
             tabIndex={1}
+            $currentPlan={currentPlan}
+            data-plan={plan.name}
+            onClick={planHandler}
+            key={plan.name}
             onKeyDown={e => {
               if (e.key === 'Enter' || e.key === ' ') {
-                isYearlyToggler(e as unknown as ChangeEvent<HTMLInputElement>);
+                planHandler(e as unknown as MouseEvent<HTMLDivElement>);
               }
             }}
-            $isYearly={!isYearly}>
-            Monthly
-          </CheckLabel>
-          <input type="checkbox" checked={isYearly} onChange={isYearlyToggler}></input>
-          <CheckLabel
-            tabIndex={1}
-            onKeyDown={e => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                isYearlyToggler(e as unknown as ChangeEvent<HTMLInputElement>);
-              }
-            }}
-            $isYearly={isYearly}>
-            Yearly
-          </CheckLabel>
-        </DurationToggleBox>
-      </MainBox>
-      <ButtonBox>
-        <SolidButton
-          disabled={currentPlan === ''}
-          onClick={() => {
-            stepHandler(1);
-          }}>
-          Next Step
-        </SolidButton>
-        <PlainButton
-          onClick={() => {
-            stepHandler(-1);
-          }}>
-          Go Back
-        </PlainButton>
-      </ButtonBox>
-    </>
+          >
+            {plan.icon}
+            <PlanMainBox>
+              <PlanMain $isYearly={isYearly}>
+                <MediumBlueText>{plan.name}</MediumBlueText>
+                <SmallText>
+                  ${isYearly ? `${plan.yearly}/yr` : `${plan.monthly}/mo`}
+                </SmallText>
+              </PlanMain>
+              <PlanDescription $isYearly={isYearly}>2 months free</PlanDescription>
+            </PlanMainBox>
+          </PlanBox>
+        ))}
+      </PlansBox>
+      <DurationToggleBox>
+        <CheckLabel
+          tabIndex={1}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              isYearlyToggler(e as unknown as ChangeEvent<HTMLInputElement>);
+            }
+          }}
+          $isYearly={!isYearly}
+        >
+          Monthly
+        </CheckLabel>
+        <input type="checkbox" checked={isYearly} onChange={isYearlyToggler}></input>
+        <CheckLabel
+          tabIndex={1}
+          onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              isYearlyToggler(e as unknown as ChangeEvent<HTMLInputElement>);
+            }
+          }}
+          $isYearly={isYearly}
+        >
+          Yearly
+        </CheckLabel>
+      </DurationToggleBox>
+    </MainBox>
   );
 }
 

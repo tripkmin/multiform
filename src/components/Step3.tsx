@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { theme, timer } from 'styles/constants';
 import { SmallText, BoldBlueText, MediumPurpleText } from './common/Fonts';
 import { MouseEvent } from 'react';
-import { PlainButton, SolidButton } from './common/Button';
-import Header from './Header';
 
 interface Step3Props {
   isYearly: boolean;
@@ -12,70 +10,48 @@ interface Step3Props {
     name: string;
     status: boolean;
   }[];
-  stepHandler: (num: number) => void;
   addOnToggler: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
-export default function Step3({
-  isYearly,
-  addOns,
-  stepHandler,
-  addOnToggler,
-}: Step3Props) {
+export default function Step3({ isYearly, addOns, addOnToggler }: Step3Props) {
   return (
-    <>
-      <Header step="step3" />
-      <MainBox>
-        <AddOnsBox>
-          {addOns.map(addOn => (
-            <AddOnBox
-              tabIndex={1}
-              onClick={addOnToggler}
-              data-name={addOn.name}
-              $status={addOn.status}
-              onKeyDown={e => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  addOnToggler(e as unknown as MouseEvent<HTMLDivElement>);
-                }
-              }}>
-              <input type="checkbox" checked={addOn.status}></input>
-              <AddOnDescriptionBox>
-                <BoldBlueText>{addOn.name}</BoldBlueText>
-                <SmallText>
-                  {phrases.step3.addOns.find(el => el.name === addOn.name)?.name}
-                </SmallText>
-              </AddOnDescriptionBox>
-              {isYearly ? (
-                <MediumPurpleText>
-                  +${phrases.step3.addOns.find(el => el.name === addOn.name)?.yearlyPrice}
-                  /yr
-                </MediumPurpleText>
-              ) : (
-                <MediumPurpleText>
-                  +$
-                  {phrases.step3.addOns.find(el => el.name === addOn.name)?.monthlyPrice}
-                  /mo
-                </MediumPurpleText>
-              )}
-            </AddOnBox>
-          ))}
-        </AddOnsBox>
-      </MainBox>
-      <ButtonBox>
-        <SolidButton
-          onClick={() => {
-            stepHandler(1);
-          }}>
-          Next Step
-        </SolidButton>
-        <PlainButton
-          onClick={() => {
-            stepHandler(-1);
-          }}>
-          Go Back
-        </PlainButton>
-      </ButtonBox>
-    </>
+    <MainBox>
+      <AddOnsBox>
+        {addOns.map(addOn => (
+          <AddOnBox
+            tabIndex={1}
+            onClick={addOnToggler}
+            data-name={addOn.name}
+            $status={addOn.status}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                addOnToggler(e as unknown as MouseEvent<HTMLDivElement>);
+              }
+            }}
+          >
+            <input type="checkbox" checked={addOn.status}></input>
+            <AddOnDescriptionBox>
+              <BoldBlueText>{addOn.name}</BoldBlueText>
+              <SmallText>
+                {phrases.step3.addOns.find(el => el.name === addOn.name)?.name}
+              </SmallText>
+            </AddOnDescriptionBox>
+            {isYearly ? (
+              <MediumPurpleText>
+                +${phrases.step3.addOns.find(el => el.name === addOn.name)?.yearlyPrice}
+                /yr
+              </MediumPurpleText>
+            ) : (
+              <MediumPurpleText>
+                +$
+                {phrases.step3.addOns.find(el => el.name === addOn.name)?.monthlyPrice}
+                /mo
+              </MediumPurpleText>
+            )}
+          </AddOnBox>
+        ))}
+      </AddOnsBox>
+    </MainBox>
   );
 }
 
@@ -136,10 +112,4 @@ const AddOnDescriptionBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-`;
-
-const ButtonBox = styled.div`
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: space-between;
 `;
