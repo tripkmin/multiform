@@ -6,7 +6,7 @@ import Step1 from './steps/Step1';
 import Step2 from './steps/Step2';
 import Step3 from './steps/Step3';
 import Step4 from './steps/Step4';
-import { emailRegex, nameRegex, phoneRegex } from 'utils/regex';
+import { emailRegex, phoneRegex } from 'utils/regex';
 import MultiFormHeader from './MultiFormHeader';
 import MultiFormFooter from './MultiFormFooter';
 import { nameChecker } from 'utils/validateNames';
