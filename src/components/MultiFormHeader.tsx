@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { HeadText, Text } from './common/Fonts';
 import { phrases } from 'assets/phrases';
 import { IconThankYou } from 'assets/icons';
+import { memo } from 'react';
 
 interface StepProps {
   currentStep: number;
@@ -12,7 +13,7 @@ interface StepPhrasesType {
   subHead: string;
 }
 
-export default function MultiFormHeader({ currentStep }: StepProps) {
+const MultiFormHeader = memo(({ currentStep }: StepProps) => {
   const currentStepPhrases: Record<number, StepPhrasesType> = {
     1: phrases.step1,
     2: phrases.step2,
@@ -30,8 +31,7 @@ export default function MultiFormHeader({ currentStep }: StepProps) {
       <Text>{currentStepPhrases[currentStep].subHead}</Text>
     </HeadBox>
   );
-}
-
+});
 const HeadBox = styled.div<{ $isFinalStep: boolean }>`
   display: flex;
   flex-direction: column;
@@ -46,3 +46,5 @@ const HeadBox = styled.div<{ $isFinalStep: boolean }>`
         `
       : `gap: 0.8rem;`}
 `;
+
+export default MultiFormHeader;

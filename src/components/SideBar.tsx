@@ -1,8 +1,9 @@
 import { phrases } from 'assets/phrases';
+import { memo } from 'react';
 import styled from 'styled-components';
 import { size, theme, timer } from 'styles/constants';
 
-export default function SideBar({ currentStep }: { currentStep: number }) {
+const SideBar = memo(({ currentStep }: { currentStep: number }) => {
   return (
     <SideBarBox>
       {phrases.steps.map((step, idx) => (
@@ -18,7 +19,7 @@ export default function SideBar({ currentStep }: { currentStep: number }) {
       ))}
     </SideBarBox>
   );
-}
+});
 
 const SideBarBox = styled.div`
   flex-basis: 274px;
@@ -104,3 +105,5 @@ const IndicatorHead = styled.p`
   font-weight: 500;
   letter-spacing: 1.25px;
 `;
+
+export default SideBar;
